@@ -1,0 +1,19 @@
+.auth-container(ng-controller="ConfirmationController as vm")
+  // START panel
+  .auth-panel.text-center
+    .panel-heading
+      a(href="/")
+        img.img-responsive(src='app/img/logonew.png', alt='watstock')
+    .panel-body.pt0.ph-xl.pb-xl
+      div(ng-if='!vm.status')
+        h4.mt-lg.mb-lg Please confirm your email address,</br> to activate your account
+        button.btn.btn-main.btn-full.mt-lg(type='button' ng-disabled="vm.loading" ng-click="vm.confirm()") Confirm my Account
+      div(ng-if='vm.status')
+        .m
+          img(src='app/img/auth/confirmed.png', alt='')
+        h4 Your email was confirmed
+        button.btn.btn-main.btn-full.mt-lg(type='button' ui-sref='auth.login') Sign In
+
+  // END panel
+  .p-lg.text-center
+    span Copyright &copy; HotStock 2017. All rights reserved.

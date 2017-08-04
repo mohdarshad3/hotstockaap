@@ -1,0 +1,84 @@
+header#login
+  .header_menu
+    .container
+      .row
+        .col-md-3.col-sm-3.col-xs-6
+          .logo
+            a(href='index.html')
+              img.img-responsive(src='app/images/hotstock.png')
+          // logo
+        .col-md-9.col-sm-9.col-xs-12
+          nav.navbar.navbar-default
+            .navbar-header
+              button.navbar-toggle(type='button', data-toggle='collapse', data-target='#be_up_nav')
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+            #be_up_nav.collapse.navbar-collapse
+              ul.nav.navbar-nav.navbar-right
+                li
+                  a(href='who-we-are.html')
+                    span Home
+                li
+                  a(href='service.html')
+                    span About
+                li
+                  a(href='team.html')
+                    span Features
+                li
+                  a(href='testimonial.html')
+                    span Pricing
+                li
+                  a(href='blog.html')
+                    span FAQ
+        // col
+      // row
+    // container
+  // header_menu
+.login_form(ng-controller='LoginFormController as login')
+  .container
+    .row
+      .col-md-6.col-sm-6.col-xs-12
+        .bann_cont
+          img.img-responsive(src='app/images/mobile-login.png')
+        // bann_cont
+      // col
+      .col-md-6.col-sm-6.col-xs-12
+        form.user_login(role='form', ng-submit='login.login($event)', name='login.loginForm', novalidate='')
+          h3
+            | the hottest trading
+            br
+            | App is ready
+          h4 Get Started
+          .login_input
+            .form-group
+              label.dis-blink(for='email')
+              input#email.form-control(type='email', placeholder='Email', name='account_email', autocomplete='off', ng-model='login.account.email', required='')
+              span.text-danger(ng-show='login.loginForm.account_email.$dirty && login.loginForm.account_email.$error.required') This field is required
+              span.text-danger(ng-show='login.loginForm.account_email.$dirty && login.loginForm.account_email.$error.email') This field must be a valid email address
+            .form-group
+              label.dis-blink(for='password')
+              input#pwd.form-control(type='password', placeholder='Password', name='account_password', ng-model='login.account.password', required='')
+              span.text-danger(ng-show='login.loginForm.account_password.$dirty && login.loginForm.account_password.$error.required') This field is required
+            button.btn.btn-default(type='submit',ng-disabled='login.loading') Log In
+            .social_login
+              h5 or use your social media
+              ul
+                li#linked
+                  a(href='#')
+                    i.fa.fa-linkedin
+                    span Linked In
+                li#fbck
+                  a(href='auth.confirmAccount')
+                    i.fa.fa-facebook
+                    span Facebook
+            h6
+              | Forgot your login details? Get help
+              a(href='#')  sign in.
+            a#regis(ui-sref="auth.register") Register
+      // col
+    // row
+  // container
+  footer
+    h4 © Copyright 2017 Watstock - All Rights Reserved
+// login_form

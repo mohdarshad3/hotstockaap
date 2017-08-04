@@ -1,0 +1,68 @@
+.stocks-table {
+  overflow: auto;
+  table > thead:first-child > tr:first-child > th {
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #00bff3;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 0;
+    border-right: 2px solid #fff;
+  }
+  td {
+    white-space: nowrap;
+  }
+  .text-success {
+    color: #a4d25a
+  }
+  .text-danger {
+    color: #a82e3b
+  }
+  .btn-action {
+    width: 45px;
+    border-radius: 0;
+    &.btn-red {
+      background-color: #a82e3b;
+      border-color: #a82e3b;
+    }
+    &.btn-green {
+      background-color: #a4d25a;
+      border-color: #a4d25a;
+    }
+  }
+  .company-logo {
+    margin-right: 5px;
+  }
+  .company-logo,
+  .company-name,
+  .ticker_last,
+  .real-time-value {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .ticker_bid.text-success + span,
+  .ticker_ask.text-success + span {
+    color: #a4d25a;
+  }
+  .ticker_bid.text-danger + span,
+  .ticker_ask.text-danger + span {
+    color: #a82e3b;
+  }
+  .real-time-value {
+    opacity: 0.8;
+    font-size: 12px;
+  }
+  .ticker {
+    i.fa {
+      display: none;
+    }
+    .text-success>i.fa.fa-chevron-circle-up {
+      display: inline-block;
+    }
+    .text-danger>i.fa.fa-chevron-circle-down {
+      display: inline-block;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+header#login
+    .header_menu
+        .container(ng-controller='TopFormController as top')
+            .row
+                .col-md-3.col-sm-3.col-xs-6
+                    .logo
+                        a(href='index.html')
+                            img.img-responsive(src='app/images/hotstock.png')
+                    // logo
+                .col-md-9.col-sm-9.col-xs-12
+                    nav.navbar.navbar-default
+                        | >
+                        .navbar-header
+                            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#be_up_nav')
+                                span.icon-bar
+                                span.icon-bar
+                                span.icon-bar
+                        #be_up_nav.collapse.navbar-collapse
+                            form.search
+                                input#search(type='search', name='search', style='display: none;')
+                                a#sub_search(href='#')
+                                    i.fa.fa-search(aria-hidden='true')
+                            .pro_setting
+                                ul
+                                    li#pro_dp
+                                        img(src='app/images/dp.png')
+                                    li
+                                        i.fa.fa-cog(aria-hidden='true')
+                                    li
+                                        a(href='javascript:', ng-click='top.logout();')
+                                            i.fa.fa-power-off(aria-hidden='true')
+                            // pro_setting
+                // col
+            // row
+        // container
+    // header_menu

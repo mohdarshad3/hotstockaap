@@ -1,0 +1,74 @@
+<div class="stocks-table p-lg">
+   <table class="table table-hover m0">
+      <thead>
+         <tr>
+            <th style="width:1%;">Company</th>
+            <th style="width:1%;">Accuracy</th>
+            <th style="width:1%;">10 days chart</th>
+            <th style="width:1%;">Real-time</th>
+            <th>Tomorrow</th>
+            <th>10 days</th>
+            <th>Time</th>
+            <th>Advice</th>
+         </tr>
+      </thead>
+      <tbody class="real_time_update">
+         <tr class="mda-list clickable ticker" ng-repeat="item in stocks.tickers track by item.tickerSymbol" ng-class="item.tickerSymbol" ui-sref="app.company({id:item.tickerSymbol})">
+            <td>
+               <div class="company-logo">
+                  <img class="img-ticker" ng-src="{{item.iconUrl}}" />
+               </div>
+               <div class="company-name">
+                  <div>{{::item.companyName}}</div>
+                  <div>({{::item.tickerSymbol}})</div>
+               </div>
+            </td>
+            <td>
+               <div>
+                  <small>Price</small>
+                  <span>{{::item.historical.accuracy | currency:''}}%</span>
+               </div>
+               <div>
+                  <small>Trend</small>
+                  <span>{{::item.historical.trendAccuracy | currency:''}}%</span>
+               </div>
+            </td>
+            <td>
+               <stocks-table-chart predictions="item.predictions" historical="item.historical"></stocks-table-chart>
+            </td>
+            <td class="text-center">
+               <div class="ticker_last mr">{{::item.last | currency}}</div>
+               <div class="real-time-value">
+                  <div>
+                     <span class="ticker_bid">{{::item.bid | currency}}</span>
+                     <span>bid</span>
+                  </div>
+                  <div>
+                     <span class="ticker_ask">{{::item.ask | currency}}</span>
+                     <span>ask</span>
+                  </div>
+               </div>
+            </td>
+            <td class="text-center">
+               <span>{{stocks.getForecast(item, 1).prediction | currency}}</span>
+               <span ng-class="stocks.getForecast(item, 1).trend"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i><i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  <span class="small">{{stocks.getForecast(item, 1).changeFormatted}}</span>
+               </span>
+            </td>
+            <td class="text-center">
+               <span>{{stocks.getForecast(item, 10).prediction | currency}}</span>
+               <span ng-class="stocks.getForecast(item, 10).trend"><i class="fa fa-chevron-circle-up" aria-hidden="true"></i><i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  <span class="small">{{stocks.getForecast(item, 10).changeFormatted}}</span>
+               </span>
+            </td>
+            <td class="text-center ticker_time">{{::item.date | date:'h:mm:ss':'UTC'}}</td>
+            <td class="text-center">
+               <button class="btn btn-action btn-gray btn-xs" ng-class="{&quot;btn-red&quot;:stocks.getForecast(item, 1).changePercent &lt; -2, &quot;btn-green&quot;:stocks.getForecast(item, 1).changePercent &gt; 2}" ng-click="$event.stopPropagation();">
+                  <span class="text-uppercase">{{stocks.getForecast(item, 1).changePercent
+                     < -2 ? 'sell' : (stocks.getForecast(item, 1).changePercent>2 ? 'buy':'hold')}}</span>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>

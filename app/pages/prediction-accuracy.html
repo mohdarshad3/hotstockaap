@@ -1,0 +1,38 @@
+<div id="prediction-accuracy" ng-controller="StocksMlpController as vm">
+   <div class="container">
+      <div class="panel mt-lg">
+         <div class="panel-heading">
+            <div class="panel-title text-thin">Prediction Accuracy</div>
+         </div>
+         <div class="panel-wrapper pb-lg">
+            <div class="panel-body">
+               <div class="row">
+                  <div class="col-sm-3">
+                     <md-input-container>
+                        <label>Company</label>
+                        <md-select ng-model="vm.ticker" ng-model-options="{trackBy: '$value.tickerSymbol'}" ng-change="vm.loadData()">
+                           <md-option ng-value="ticker" ng-repeat="ticker in vm.tickers">{{ ticker.companyName }} ({{ ticker.tickerSymbol }})</md-option>
+                        </md-select>
+                     </md-input-container>
+                  </div>
+                  <div class="col-sm-4">
+                     <md-input-container>
+                        <label>Date</label>
+                        <md-datepicker ng-model="vm.date" ng-change="vm.loadData()" md-min-date="vm.minDate" md-max-date="vm.maxDate" md-date-filter="vm.onlyWeekendsPredicate" md-open-on-focus="md-open-on-focus"></md-datepicker>
+                     </md-input-container>
+                  </div>
+                  <div class="col-sm-5">
+                     <div class="clearfix mt-lg">
+                        <p class="subtitle pull-right">Accuracy: {{vm.historical.accuracy | currency:''}}%</p>
+                     </div>
+                     <div class="clearfix">
+                        <p class="subtitle pull-right">Trend accuracy: {{vm.historical.trendAccuracy | currency:''}}%</p>
+                     </div>
+                  </div>
+               </div>
+               <stocks-mlp-chart historical="vm.historical"></stocks-mlp-chart>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

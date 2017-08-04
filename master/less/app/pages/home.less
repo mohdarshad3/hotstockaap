@@ -1,0 +1,154 @@
+.hero {
+  margin-bottom: 0;
+  &-msg {
+    font-family: 'ProximaNova-Regular', sans-serif;
+    background-color: #24B8E3;
+    background-image: url(../img/landing/background.png);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 40px 30px 0;
+    h1 {
+      font-size: 30px;
+      color: #fff;
+    }
+    p.subtitle {
+      margin-top: 5px;
+      margin-bottom: 30px;
+      font-size: 20px;
+      line-height: 32px;
+      color: #fff;
+      span {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+    button {
+      font-size: 16px;
+    }
+    img.img-responsive {
+      margin-bottom: -4%;
+    }
+    .hero-text {
+      padding: 0 85px 20px 30px;
+    }
+    .link-unstyled {
+      img {
+        height: 40px;
+      }
+    }
+  }
+
+}
+@media (max-width: 1200px) {
+  .hero-msg .hero-text {
+    padding: 0;
+  }
+}
+
+.stock-panel {
+  position: relative;
+  z-index: 1;
+  .stocks-table {
+    thead th {
+      color: rgba(0, 0, 0, 0.8);
+    }
+    tbody tr:last-child td {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+
+.bg-halo-chart {
+  background: url(../img/home/bg_halo.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.stocks-table {
+  button.btn-tab {
+    opacity: 0.4;
+    &:hover,
+    &.btn-active {
+      opacity: 1.0;
+    }
+  }
+}
+
+.partners {
+  padding-top: 30px;
+  padding-bottom: 20px;
+  background-color: #24b8e3;
+  h2 {
+    color: #fff;
+  }
+  .img-center {
+    text-align: center;
+    align-items: center;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.img-holder {
+  height: 100px;
+  width: 80px;
+  margin: 0 auto;
+  vertical-align: middle;
+  img {
+    width: 100%;
+  }
+}
+
+.devices {
+  .info {
+    margin-top: 120px;
+    margin-bottom: 60px;
+  }
+  .img-cover {
+    img {
+      display: block;
+      margin-top: -40px;
+      height: 500px;
+      margin-bottom: -32px;
+    }
+  }
+}
+
+.subscribe {
+  input.form-control {
+    display: inline;
+  }
+}
+
+.img-ticker {
+  height: 48px;
+  width: 48px;
+}
+
+.btn-register {
+  padding: 7px;
+}
+@media (max-width:767px) {
+    .hero-msg {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 20px;
+        .hero-text {
+            margin-left: 0 !important;
+        }
+    }
+    .app-links {
+        text-align: center;
+        .link-unstyled {
+            width:45%;
+            display: inline-block;
+            max-width: 149px;
+            img {
+                display: block;
+                width:100%;
+            }
+        }
+    }
+}

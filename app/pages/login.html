@@ -1,0 +1,112 @@
+<header id="login">
+   <div class="header_menu">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-6">
+               <div class="logo">
+                  <a href="index.html">
+                     <img class="img-responsive" src="app/images/hotstock.png" />
+                  </a>
+               </div>
+               <!-- logo-->
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+               <nav class="navbar navbar-default">
+                  <div class="navbar-header">
+                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#be_up_nav">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                     </button>
+                  </div>
+                  <div class="collapse navbar-collapse" id="be_up_nav">
+                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href="who-we-are.html">
+                              <span>Home</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="service.html">
+                              <span>About</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="team.html">
+                              <span>Features</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="testimonial.html">
+                              <span>Pricing</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="blog.html">
+                              <span>FAQ</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
+            <!-- col-->
+         </div>
+         <!-- row-->
+      </div>
+      <!-- container-->
+   </div>
+   <!-- header_menu-->
+</header>
+<div class="login_form" ng-controller="LoginFormController as login">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="bann_cont">
+               <img class="img-responsive" src="app/images/mobile-login.png" />
+            </div>
+            <!-- bann_cont-->
+         </div>
+         <!-- col-->
+         <div class="col-md-6 col-sm-6 col-xs-12">
+            <form class="user_login" role="form" ng-submit="login.login($event)" name="login.loginForm" novalidate="">
+               <h3>the hottest trading
+                  <br/>App is ready</h3>
+               <h4>Get Started</h4>
+               <div class="login_input">
+                  <div class="form-group">
+                     <label class="dis-blink" for="email"></label>
+                     <input class="form-control" id="email" type="email" placeholder="Email" name="account_email" autocomplete="off" ng-model="login.account.email" required="" />
+                     <span class="text-danger" ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required">This field is required</span>
+                     <span class="text-danger" ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email">This field must be a valid email address</span>
+                  </div>
+                  <div class="form-group">
+                     <label class="dis-blink" for="password"></label>
+                     <input class="form-control" id="pwd" type="password" placeholder="Password" name="account_password" ng-model="login.account.password" required="" />
+                     <span class="text-danger" ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required">This field is required</span>
+                  </div>
+                  <button class="btn btn-default" type="submit" ng-disabled="login.loading">Log In</button>
+                  <div class="social_login">
+                     <h5>or use your social media</h5>
+                     <ul>
+                        <li id="linked"><a href="#"><i class="fa fa-linkedin"></i><span>Linked In</span></a>
+                        </li>
+                        <li id="fbck"><a href="auth.confirmAccount"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <h6>Forgot your login details? Get help<a href="#"> sign in.</a>
+                  </h6><a id="regis" ui-sref="auth.register">Register</a>
+               </div>
+            </form>
+         </div>
+         <!-- col-->
+      </div>
+      <!-- row-->
+   </div>
+   <!-- container-->
+   <footer>
+      <h4>© Copyright 2017 Watstock - All Rights Reserved</h4>
+   </footer>
+</div>
+<!-- login_form-->

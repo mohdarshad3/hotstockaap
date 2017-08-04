@@ -1,0 +1,55 @@
+doctype html
+html(lang="en", data-ng-app="wtst")
+
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+    meta(name='description', content='{{app.description}}')
+    meta(name='keywords', content='app, responsive, angular, bootstrap, dashboard, admin')
+    link(rel='icon', type="image/png", sizes="32x32", href="app/img/icon/32.png")
+
+    title(data-ng-bind="::pageTitle()") HotStock - Intelligence trading
+    base(href='/')
+    // Bootstrap styles
+
+    link(rel='stylesheet', href='app/css/bootstrap.css', data-ng-if="!app.layout.isRTL")
+    link(rel='stylesheet', href='app/css/style.css')
+    link(rel='stylesheet', href='app/css/font-awesome.css')
+
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css')
+
+    link(rel='stylesheet', href='app/css/bootstrap-rtl.css', data-ng-if="app.layout.isRTL")
+    // ngMaterial styles
+    link(rel='stylesheet', href='vendor/angular-material/angular-material.css')
+    //Application styles
+    link(rel='stylesheet', href='app/css/app.css', data-ng-if="!app.layout.isRTL")
+    link(rel='stylesheet', href='app/css/app-rtl.css', data-ng-if="app.layout.isRTL")
+    // Themes
+   link(rel='stylesheet', ng-href='{{app.layout.theme}}', data-ng-if="app.layout.theme")
+
+  body(data-ng-class="")
+
+    div(data-preloader)
+
+
+    script(src='app/js/base.js')
+    script(src='vendor/angular-material/angular-material.js')
+    script(src='app/js/app.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script.
+          $(document).ready(function () {
+            $(".login_form form input").on('focus blur', function () {
+              $(this).siblings().addClass('hasValue');
+            })
+          });
+    //- templates:js
+    //- endinject
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q || []).push(arguments)},i[r].l=1 * new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+

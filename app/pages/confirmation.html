@@ -1,0 +1,27 @@
+<div class="auth-container" ng-controller="ConfirmationController as vm">
+   <!-- START panel-->
+   <div class="auth-panel text-center">
+      <div class="panel-heading">
+         <a href="/">
+            <img class="img-responsive" src="app/img/logonew.png" alt="watstock" />
+         </a>
+      </div>
+      <div class="panel-body pt0 ph-xl pb-xl">
+         <div ng-if="!vm.status">
+            <h4 class="mt-lg mb-lg">Please confirm your email address,</br>to activate your account</h4>
+            <button class="btn btn-main btn-full mt-lg" type="button" ng-disabled="vm.loading" ng-click="vm.confirm()">Confirm my Account</button>
+         </div>
+         <div ng-if="vm.status">
+            <div class="m">
+               <img src="app/img/auth/confirmed.png" alt="" />
+            </div>
+            <h4>Your email was confirmed</h4>
+            <button class="btn btn-main btn-full mt-lg" type="button" ui-sref="auth.login">Sign In</button>
+         </div>
+      </div>
+   </div>
+   <!-- END panel-->
+   <div class="p-lg text-center">
+      <span>Copyright &copy; HotStock 2017. All rights reserved.</span>
+   </div>
+</div>

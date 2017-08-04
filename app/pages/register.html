@@ -1,0 +1,127 @@
+<header id="login">
+   <div class="header_menu">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-6">
+               <div class="logo">
+                  <a href="index.html">
+                     <img class="img-responsive" src="app/images/hotstock.png" />
+                  </a>
+               </div>
+               <!-- logo-->
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+               <nav class="navbar navbar-default">
+                  <div class="navbar-header">
+                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#be_up_nav">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                     </button>
+                  </div>
+                  <div class="collapse navbar-collapse" id="be_up_nav">
+                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href="who-we-are.html">
+                              <span>Home</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="service.html">
+                              <span>About</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="team.html">
+                              <span>Features</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="testimonial.html">
+                              <span>Pricing</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="blog.html">
+                              <span>FAQ</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
+            <!-- col-->
+         </div>
+         <!-- row-->
+      </div>
+      <!-- container-->
+   </div>
+   <!-- header_menu-->
+</header>
+<div class="login_form register" ng-controller="RegisterFormController as reg">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-8 col-sm-8 col-xs-12 col-centered">
+            <div class="regis_new_acc">
+               <img src="app/images/regis-logo.png" />
+               <h2>Register a New Account</h2>
+               <ul id="steps">
+                  <li class="current">
+                     <span>1</span>
+                     <h3>Registeration Form</h3>
+                  </li>
+                  <li>
+                     <span>2</span>
+                     <h3>Confirm Account</h3>
+                  </li>
+                  <li>
+                     <span>3</span>
+                     <h3>Login</h3>
+                  </li>
+               </ul>
+            </div>
+            <!-- regis_new_acc-->
+            <form>
+               <div class="login_input">
+                  <div class="form-group">
+                     <label class="dis-blink" for="fullname">Full Name</label>
+                     <input class="form-control" id="email" type="text" name="fullname" />
+                  </div>
+                  <div class="form-group">
+                     <label class="dis-blink" for="username">Username</label>
+                     <input class="form-control" id="email" type="text" name="username" />
+                  </div>
+                  <div class="form-group">
+                     <label class="dis-blink" for="email">Email</label>
+                     <input class="form-control" id="email" type="email" name="email" />
+                  </div>
+                  <div class="form-group">
+                     <label class="dis-blink" for="phone">Phone Number</label>
+                     <input class="form-control" id="email" type="email" name="phone" />
+                  </div>
+                  <div class="form-group">
+                     <label class="dis-blink" for="password">Password</label>
+                     <input class="form-control" id="pwd" type="password" name="password" />
+                  </div>
+                  <div class="form-group">
+                     <label class="dis-blink" for="confirm_p">Confirm Password</label>
+                     <input class="form-control" id="pwd" type="password" name="confirm_p" />
+                  </div>
+                  <div class="checkbox">
+                     <label>
+                        <input type="checkbox" name="remember" />i consent that I am over 18</label>
+                  </div>
+                  <button class="btn btn-default" type="button" ng-click="reg.confirmAccount();">Register</button>
+               </div>
+            </form>
+         </div>
+         <!-- col-->
+      </div>
+      <!-- row-->
+   </div>
+   <!-- container-->
+   <!--<footer>
+<h4>© Copyright 2017 Watstock - All Rights Reserved</h4>
+</footer>-->
+</div>
+<!-- login_form-->

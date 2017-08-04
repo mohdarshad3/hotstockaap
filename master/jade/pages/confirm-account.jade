@@ -1,0 +1,81 @@
+.container(ng-controller="RegisterFormController as reg")
+    // START panel
+    .panel
+        .panel
+            a(href="/")
+
+        .panel
+            header#login
+                .header_menu
+                    .container
+                        .row
+                            .col-md-3.col-sm-3.col-xs-6
+                                .logo
+                                    a(href='index.html')
+                                        img.img-responsive(src='./images/hotstock.png')
+                                // logo
+                            .col-md-9.col-sm-9.col-xs-12
+                                nav.navbar.navbar-default
+                                    .navbar-header
+                                        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#be_up_nav')
+                                            span.icon-bar
+                                            span.icon-bar
+                                            span.icon-bar
+                                    #be_up_nav.collapse.navbar-collapse
+                                        ul.nav.navbar-nav.navbar-right
+                                            li
+                                                a(href='who-we-are.html')
+                                                    span Home
+                                            li
+                                                a(href='service.html')
+                                                    span About
+                                            li
+                                                a(href='team.html')
+                                                    span Features
+                                            li
+                                                a(href='testimonial.html')
+                                                    span Pricing
+                                            li
+                                                a(href='blog.html')
+                                                    span FAQ
+                            // col
+                        // row
+                    // container
+                // header_menu
+            .login_form.register.confirm
+                .container
+                    .row
+                        .col-md-8.col-sm-8.col-xs-12.col-centered
+                            .regis_new_acc
+                                img(src='./images/regis-logo.png')
+                                h2 Register a New Account
+                                ul#steps
+                                    li.complete
+                                        span 1
+                                        h3 Registeration Form
+                                    li.current
+                                        span 2
+                                        h3 Confirm Account
+                                    li
+                                        span 3
+                                        h3 Login
+                                h2 Almost done!
+                                p
+                                    | We need to confirm your email address. To complete the process, please click the link
+                                    br
+                                    |  in the mail we just sent you.
+                                    br
+                                    | Please make sure you check your spam folder in your email provider, and enable to be
+                                    br
+                                    |  on your safe senders list.
+                                a(href='#') Confirm My Account
+                            // regis_new_acc
+                        // col
+                    // row
+                // container
+                //
+                  <footer>
+                  <h4>© Copyright 2017 Watstock - All Rights Reserved</h4>
+                  </footer>
+            // login_form
+

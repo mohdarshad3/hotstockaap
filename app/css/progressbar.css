@@ -1,0 +1,82 @@
+
+.position {
+  float: none;
+  margin: 20px auto 0;
+}
+
+.progress-bar {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  background: none;
+  box-shadow: none
+
+}
+
+.progress-bar div {
+  position: absolute;
+  height: 195px;
+  width: 195px;
+  border-radius: 50%;
+
+}
+.span_out {
+    width: 185px !important;
+    height: 185px !important;
+    background: #fff;
+    left: 5px;
+    top: 5px;
+    background: radial-gradient(ellipse at center, rgba(35,35,35,1) 0%, rgba(13,13,13,1) 96%, rgba(35,35,35,1) 100%);
+}
+
+.progress-bar div span {
+    position: absolute;
+    line-height: 150px;
+    height: 150px;
+    width: 150px;
+    left: 18px;
+    box-shadow: 0 0 5px 3px #81b215;
+    top: 18px;
+    text-align: center;
+    border-radius: 50%;
+    background: rgba(35,35,35,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(35,35,35,1) 0%, rgba(13,13,13,1) 96%, rgba(35,35,35,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(35,35,35,1)), color-stop(96%, rgba(13,13,13,1)), color-stop(100%, rgba(35,35,35,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(35,35,35,1) 0%, rgba(13,13,13,1) 96%, rgba(35,35,35,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(35,35,35,1) 0%, rgba(13,13,13,1) 96%, rgba(35,35,35,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(35,35,35,1) 0%, rgba(13,13,13,1) 96%, rgba(35,35,35,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(35,35,35,1) 0%, rgba(13,13,13,1) 96%, rgba(35,35,35,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#232323', endColorstr='#232323', GradientType=1 );
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 40px;
+    color: #fff;
+}
+
+.progress-bar .background { background-color: #b3cef6; }
+
+.progress-bar .rotate {
+  clip: rect(0 100px 200px 0);
+  background-color: #4b86db;
+}
+
+.progress-bar .left {
+  clip: rect(0 100px 200px 0);
+  opacity: 1;
+  background-color: #b3cef6;
+}
+
+.progress-bar .right {
+  clip: rect(0 100px 200px 0);
+  transform: rotate(180deg);
+  opacity: 0;
+  background-color: #4b86db;
+}
+ @keyframes 
+toggle {  0% {
+ opacity: 0;
+}
+ 100% {
+ opacity: 1;
+}
+}
