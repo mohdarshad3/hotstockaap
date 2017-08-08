@@ -53,32 +53,35 @@ header#login
               span 3
               h3 Login
         // regis_new_acc
-        form
+        form(role='form', name="reg.registerForm", novalidate='', ng-submit="reg.register($event)")
           .login_input
             .form-group
-              label.dis-blink(for='fullname') Full Name
-              input#email.form-control(type='text', name='fullname')
+              label.dis-blink
+              input#email.form-control(type='name', name="account_name" placeholder='Full Name', autocomplete="off", ng-model="reg.account.name", required='')
             .form-group
-              label.dis-blink(for='username') Username
-              input#email.form-control(type='text', name='username')
+              label.dis-blink
+              input#email.form-control(type='username', name="account_username" placeholder='Username', autocomplete="off", ng-model="reg.account.username", required='')
             .form-group
-              label.dis-blink(for='email') Email
-              input#email.form-control(type='email', name='email')
+              label.dis-blink
+              input#email.form-control(type='email', name="account_email" placeholder='Enter email', autocomplete="off", ng-model="reg.account.email", required='')
             .form-group
-              label.dis-blink(for='phone') Phone Number
-              input#email.form-control(type='email', name='phone')
+              label.dis-blink
+              input#email.form-control(type='PhoneNumber', name="account_PhoneNumber" placeholder='Enter PhoneNumber', autocomplete="off", ng-model="reg.account.PhoneNumber", required='')
             .form-group
-              label.dis-blink(for='password') Password
-              input#pwd.form-control(type='password', name='password')
+              label.dis-blink
+              input#pwd.form-control(type='password', name="account_password", placeholder='Password', ng-model="reg.account.password", ng-pattern="/^[a-zA-Z0-9]{6,10}$/", required='')
             .form-group
-              label.dis-blink(for='confirm_p') Confirm Password
-              input#pwd.form-control(type='password', name='confirm_p')
+              label.dis-blink
+              input#pwd.form-control(type='password', name="account_password_confirm", placeholder='Retype password', ng-model="reg.account.account_password_confirm", ui-validate="'$value==reg.account.password'" ui-validate-watch="'password'")
             .checkbox
               label
                 input(type='checkbox', name='remember')
                 | i consent that I am over 18
-            button.btn.btn-default(type='button', ng-click='reg.confirmAccount();') Register
+              .text-danger(ng-show="reg.registerForm.account_agreed.$dirty && reg.registerForm.account_agreed.$error.required") You must be over 18 years old
 
+                .alert.alert-danger(ng-show='reg.authMsg') {{reg.authMsg}}
+            button.btn.btn-default(type='submit' ng-disabled="reg.loading") Register
+            //a(href='confirmAccount') ConfirmAccount
       // col
     // row
   // container

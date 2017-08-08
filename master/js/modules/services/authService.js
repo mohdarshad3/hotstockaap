@@ -1,3 +1,4 @@
+
 (function() {
     'use strict';
 
@@ -13,6 +14,10 @@
             isLoggedIn: isLoggedIn,
             login: login,
             logout: logout,
+            register: register,
+            forgotPassword: forgotPassword,
+            resetPassword: resetPassword,
+            changePassword: changePassword
         };
 
         function isLoggedIn () {
@@ -20,14 +25,17 @@
         }
 
         function requestAuthToken (email, password) {
+
             var deferred = $q.defer();
 
-            apiService.post('/login', {
-                username: email,
+            apiService.post('/email/signin', {
+                email: email,
                 password: password
             }).then(
                 function(response) {
-                    deferred.resolve(response.session);
+
+                    debugger;
+                    deferred.resolve(response);
                 },
                 function(response) {
                     deferred.reject(response);
@@ -38,38 +46,129 @@
         }
 
         function setTocken (session) {
+            debugger;
             var now = new Date();
             now.setHours(now.getHours() + 2);
             var expires = now;
 
-            var token = session;
+            var token = session.accessToken;
             // var expires = session.time;
 
             authToken.save(token, expires);
         }
 
         function login (email, password) {
+
             var deferred = $q.defer();
+
             $cookies.remove('usertype', {
                 path: '/'
             });
             authToken.delete();
-            if(email=='admin@hotstock.com' && password=='admin'){
-                setTocken(Math.random());
-                deferred.resolve(Math.random());
-            }
-            else
-                deferred.reject('Invalid Credential.');
+
+            requestAuthToken(email, password).then(
+
+                function(session) {
+                    debugger;
+                    setTocken(session);
+                    deferred.resolve(session);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
 
             return deferred.promise;
         }
-        function logout () {
+
+        function register (name, username, email, password) {
+
             var deferred = $q.defer();
-            $cookies.remove('usertype', {
-                path: '/'
+
+            apiService.post('/email/signup', {
+                name: name,
+                username: username,
+                email: email,
+                password: password
+            }).then(
+
+                function(session) {
+                    debugger;
+                    setTocken(session);
+                    deferred.resolve(session);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function forgotPassword (email) {
+
+            var deferred = $q.defer();
+            var data = { email: email };
+
+            apiService.post('/login/forgot', data, false).then(
+                function(response) {
+                    deferred.resolve(response);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function resetPassword (email, password, key) {
+
+            var deferred = $q.defer();
+            var data = { email: email, password: password, key: key };
+
+            apiService.post('/login/reset', data, false).then(
+                function(response) {
+                    deferred.resolve(response);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function changePassword (currentPassword, newPassword) {
+
+            var deferred = $q.defer();
+            var data = { currentPassword: currentPassword, newPassword: newPassword };
+
+            apiService.post('/password/change/', data, false).then(
+                function(response) {
+                    deferred.resolve(response);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function logout () {
+
+            var deferred = $q.defer();
+
+            apiService.post('/signout', false, true).finally(function() {
+                debugger;
+                $cookies.remove('usertype', {
+                    path: '/'
+                });
+                authToken.delete();
+                deferred.resolve();
             });
-            authToken.delete();
-            deferred.resolve();
+
             return deferred.promise;
         }
     }

@@ -14,7 +14,7 @@
 
     function ConfirmationController($http, $state, authService) {
         var vm = this;
-        alert("hi");
+       
         activate();
 
         ////////////////

@@ -54,7 +54,7 @@
         companiesUrl: 'http://companies.wtst.io',
         newsUrl: 'http://yahoo-news.wtst.io',
         serverUrl: 'http://web.wtst.io',
-        apiUrl: 'http://users.wtst.io/api',
+        apiUrl: 'http://hotstock-auth.wtst.io/v0.0',
         templateDir: 'app/views/',
         googleAnalyticsId: 'UA-96434544-1',
         hashUrl: $location.hash()

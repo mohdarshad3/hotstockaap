@@ -1,13 +1,14 @@
+header#login(ng-include="'app/views/partials/top-navbar.html'")
 .profile
-  .container
+  .container(ng-controller='Profile1Controller as profile1')
     .row
       .col-md-1.col-sm-2.col-xs-12.col-left
         ul.pro_strip
           li
-            a(href='profile1')
+            a(href='#')
               h3 Profile
           li
-            a(href='profile1')
+            a(href='#')
               h3 stock
           li
             a(href='#')
@@ -17,38 +18,6 @@
               h3 ranking
       // col
       .col-md-11.col-sm-10.col-xs-12.col-ryt
-        .user_breif
-          span#profile_pic
-            img(src='app/images/dp.png')
-          .name_etc
-            h2
-              | Sophie Moore
-              i.fa.fa-pencil(aria-hidden='true')
-            h3
-              img(src='app/images/flag.png')
-              | UNITED STATES
-            h4 Since 2017
-          // name_etc
-          .follows
-            ul
-              li followers : 23
-              li following : 25
-            a(href='#') Follow Sophie
-          // follows
-          .money_ranking
-            ul
-              li
-                img(src='app/images/v-money.png')
-                h3
-                  | Virtual Money
-                  span $100,000
-              li
-                img(src='app/images/ranking.png')
-                h3
-                  | Ranking Position
-                  span 25
-          // money_ranking
-        // user_breif
         .stocks_goals
           .my_stocks
             h2 My Stocks
@@ -110,64 +79,78 @@
                   |  add up to 5 for $8 extra per stock
                 a(href='#') unlock
           // stocks
-          .goals
-            h2 My Goals
-            ul
-              li
-                span
-                  img(src='app/images/goal.png')
-                h3
-                  | Sophie has taken Isabelle position
-                  span 3 housrs ago
-              li
-                span
-                  img(src='app/images/already.png')
-                h3
-                  | You got already 24 position
-                  span 3 housrs ago
-              li
-                span
-                  img(src='app/images/goal1.png')
-                h3
-                  | Isabelle is following you
-                  span 3 housrs ago
-              li
-                span
-                  img(src='app/images/v-money1.png')
-                h3
-                  | Now you have $100.000
-                  span 3 housrs ago
+          .goals.accuracy
+            h2 Accuracy
+            #progress-bar.level
+              #checkback.progress-bar.position(data-percent='33', data-color='#fff,#79af00')
           // goals
+          ul#output
         // stocks_goals
         .payment_news
-          .payment
-            h2 Payment Method
-            ul
+          .payment.last_week
+            h2 Last Week
+            .paging
+              ul.pagination.pagination
+                li
+                  a(href='#') ...
+                li
+                  a(href='#') 1w
+                li
+                  a(href='#') 1w
+                li
+                  a(href='#') 1w
+                li
+                  a(href='#') TODAY
+                li
+                  a(href='#') 1w
+                li
+                  a(href='#') 1w
+                li
+                  a(href='#') 1w
+                li
+                  a(href='#') ...
+            ul.nav.nav-pills
+              li.active
+                a(data-toggle='pill', href='#performer') Top Performing
               li
-                span
-                  img(src='app/images/master-card.png')
-                h3
-                  | 000-XXX-XXX-XXX
-                  span
-                    i.fa.fa-times(aria-hidden='true')
-              li
-                span
-                  img(src='app/images/a-pay.png')
-                h3
-                  | Pay with Touch ID
-                  span
-                    i.fa.fa-times(aria-hidden='true')
-              li
-                span
-                  img(src='app/images/an-pay.png')
-                h3
-                  | Add Android Pay Account
-                  span
-                    i.fa.fa-times(aria-hidden='true')
-              li
-                span
-                  i.fa.fa-plus(aria-hidden='true')
-                h3 Add new card
+                a(data-toggle='pill', href='#stars')
+                  img(src='app/images/stars-tab.png')
+                  | All Stars
+            .tab-content
+              #performer.tab-pane.fade.in.active
+                ul
+                  li
+                    span#count 1
+                    span#per_img
+                      img(src='app/images/herman.png')
+                    span#madal
+                      img(src='app/images/gold.png')
+                    h3 $1430,000
+                  li
+                    span#count 2
+                    span#per_img
+                      img(src='app/images/herman.png')
+                    span#madal
+                      img(src='app/images/gold.png')
+                    h3 $850,000
+                  li
+                    span#count 3
+                    span#per_img
+                      img(src='app/images/herman.png')
+                    span#madal
+                      img(src='app/images/silver.png')
+                    h3 $350,000
+                  li
+                    span#count 4
+                    span#per_img
+                      img(src='app/images/herman.png')
+                    span#madal
+                      img(src='app/images/hot.png')
+                    h3 $100,000
+              #stars.tab-pane.fade
+                h3 Menu 1
+                p
+                  | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           // payment
           .news
             h2 News

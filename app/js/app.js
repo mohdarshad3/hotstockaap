@@ -25,10 +25,8 @@
             'app.loadingbar',
             'app.translate',
             'app.settings',
-            'app.maps',
             'app.utils',
             'app.material',
-            'app.stocks',
             'app.charts',
             'app.auths',
             'app.services',
@@ -48,13 +46,13 @@
     'use strict';
 
     angular
-        .module('app.charts', []);
+        .module('app.colors', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.colors', []);
+        .module('app.charts', []);
 })();
 (function() {
     'use strict';
@@ -94,12 +92,6 @@
 
     angular
         .module('app.loadingbar', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.maps', []);
 })();
 (function() {
     'use strict';
@@ -150,12 +142,6 @@
     'use strict';
 
     angular
-        .module('app.settings', []);
-})();
-(function() {
-    'use strict';
-
-    angular
         .module('app.services', []);
 })();
 
@@ -163,13 +149,13 @@
     'use strict';
 
     angular
-        .module('app.sidebar', []);
+        .module('app.settings', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.stocks', []);
+        .module('app.sidebar', []);
 })();
 (function() {
     'use strict';
@@ -181,17 +167,17 @@
     'use strict';
 
     angular
-        .module('app.wtst', []);
-})();
-(function() {
-    'use strict';
-
-    angular
         .module('app.utils', [
           'app.colors'
           ]);
 })();
 
+(function() {
+    'use strict';
+
+    angular
+        .module('app.wtst', []);
+})();
 /**=========================================================
  * Module: changePassword.controller.js
  * Demo for changePassword api
@@ -259,7 +245,23 @@
     }
 })();
 
+/**=========================================================
+ * Module: confirmAccount.controller.js
+ * Demo for confirmAccountController api
+ =========================================================*/
+(function() {
+    'use strict';
+    angular
+        .module('app.auths')
+        .controller('ConfirmController', ConfirmController);
 
+    ConfirmController.$inject = ['$rootScope', '$scope','$sce', '$http', '$state', 'authService'];
+
+    function ConfirmController($rootScope, $scope,$sce,$http, $state, authService) {
+
+
+    }
+})();
 /**=========================================================
  * Module: forgotPassword.controller.js
  * Demo for forgotPassword api
@@ -276,7 +278,7 @@
 
     function ConfirmationController($http, $state, authService) {
         var vm = this;
-        alert("hi");
+       
         activate();
 
         ////////////////
@@ -364,36 +366,62 @@
  * Demo for login api
  =========================================================*/
 
-(function() {
+
+(function () {
     'use strict';
+
     angular
         .module('app.auths')
         .controller('LoginFormController', LoginFormController);
+
 
     LoginFormController.$inject = ['$rootScope', '$scope', '$http', '$state', 'authService', '$mdDialog'];
 
     function LoginFormController($rootScope, $scope, $http, $state, authService, $mdDialog) {
         var vm = this;
+
         activate();
+
+
+        ////////////////
+
         function activate() {
+            // bind here all data from the form
             vm.account = {};
+            // place the message if something goes wrong
             vm.authMsg = '';
             vm.loading = false;
-            vm.login = function(ev) {
+
+            vm.login = function (ev) {
                 vm.authMsg = '';
+
                 if (vm.loginForm.$valid) {
+
                     vm.loading = true;
+                    debugger;
                     authService.login(vm.account.email, vm.account.password).then(
-                        function(user) {
+                        function (user) {
+                            debugger;
                             vm.loading = false;
-                            $state.go('app.home');
+                            if ($rootScope.lastState) {
+                                $state.go($rootScope.lastState.name, $rootScope.lastState.params);
+                            } else {
+                                $state.go('app.home');
+                            }
                         },
-                        function(errors) {
+                        function (errors) {
                             vm.loading = false;
-                            vm.authMsg=errors;
+                            if (errors.data && errors.data.message) {
+                                vm.authMsg = errors.data.message;
+                            } else {
+                                vm.authMsg = 'Server Request Error';
+                            }
                         }
                     );
+                    
                 } else {
+                    // set as dirty if the user click directly to login so we show the validation messages
+                    /*jshint -W106*/
                     vm.loginForm.account_email.$dirty = true;
                     vm.loginForm.account_password.$dirty = true;
                 }
@@ -402,14 +430,30 @@
     }
 })();
 /**=========================================================
+ * Module: profile1.controller.js
+ * Demo for profile1Controller api
+ =========================================================*/
+(function() {
+    'use strict';
+    angular
+        .module('app.auths')
+        .controller('Profile1Controller', Profile1Controller);
+
+    Profile1Controller.$inject = ['$rootScope', '$scope','$sce', '$http', '$state', 'authService'];
+
+    function Profile1Controller($rootScope, $scope,$sce,$http, $state, authService) {
+       
+
+    }
+})();
+/**=========================================================
  * Module: register.controller.js
  * Demo for register account api
  =========================================================*/
 
-(function() {
+/*(function() {
     'use strict';
 
-    DisclaimerController.$inject = ["$scope", "$mdDialog"];
     angular
         .module('app.auths')
         .controller('RegisterFormController', RegisterFormController);
@@ -498,7 +542,7 @@
                   
                 } else {
                     // set as dirty if the user click directly to login so we show the validation messages
-                    /*jshint -W106*/
+                    /!*jshint -W106*!/
                     vm.registerForm.account_name.$dirty = true;
                     vm.registerForm.account_username.$dirty = true;
                     vm.registerForm.account_email.$dirty = true;
@@ -534,6 +578,113 @@
                     }
                 );
             }
+        }
+    }
+})();*/
+/**=========================================================
+ * Module: register.controller.js
+ * Demo for register account api
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    DisclaimerController.$inject = ["$scope", "$mdDialog"];
+    angular
+        .module('app.auths')
+        .controller('RegisterFormController', RegisterFormController);
+
+    function DisclaimerController($scope, $mdDialog) {
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    }
+
+    RegisterFormController.$inject = ['$mdDialog', '$state', 'authService'];
+
+    function RegisterFormController($mdDialog, $state, authService) {
+        var vm = this;
+
+        function acceptDisclaimer(ev) {
+            return $mdDialog.show({
+                controller: DisclaimerController,
+                templateUrl: 'app/pages/disclaimer.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false
+            });
+        };
+
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            // bind here all data from the form
+            vm.account = {};
+            // place the message if something goes wrong
+            vm.authMsg = '';
+            vm.loading = false;
+
+            vm.register = function(ev) {
+                vm.authMsg = '';
+
+                if (vm.registerForm.$valid) {
+
+                    // show disclaimer
+                    acceptDisclaimer(ev)
+                        .then(function(answer) {
+
+                            vm.loading = true;
+                            authService.register(
+                                vm.account.name,
+                                vm.account.username,
+                                vm.account.email,
+                                vm.account.password
+                            )
+                                .then(function() {
+                                    vm.loading = false;
+                                    $state.go('app.home');
+                                }, function(errors) {
+                                    vm.loading = false;
+                                    if (errors.data && errors.data.message) {
+                                        vm.authMsg = errors.data.message;
+                                    } else {
+                                        vm.authMsg = 'Server Request Error';
+                                    }
+                                });
+
+                        });
+
+
+                } else {
+                    // set as dirty if the user click directly to login so we show the validation messages
+                    /*jshint -W106*/
+                    vm.registerForm.account_name.$dirty = true;
+                    vm.registerForm.account_username.$dirty = true;
+                    vm.registerForm.account_email.$dirty = true;
+                    vm.registerForm.account_password.$dirty = true;
+                    vm.registerForm.account_agreed.$dirty = true;
+                }
+            };
+
+            vm.showAdvanced = function (e) {
+                $mdDialog.show({
+                    contentElement: '#terms',
+                    parent: angular.element(document.body),
+                    targetEvent: e,
+                    clickOutsideToClose: true
+                });
+            };
         }
     }
 })();
@@ -644,6 +795,56 @@
         }
     }
 })();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .constant('APP_COLORS', {
+          'primary':                '#3F51B5',
+          'success':                '#4CAF50',
+          'info':                   '#2196F3',
+          'warning':                '#FF9800',
+          'danger':                 '#F44336',
+          'inverse':                '#607D8B',
+          'green':                  '#009688',
+          'pink':                   '#E91E63',
+          'purple':                 '#673AB7',
+          'dark':                   '#263238',
+          'yellow':                 '#FFEB3B',
+          'gray-darker':            '#232735',
+          'gray-dark':              '#3a3f51',
+          'gray':                   '#dde6e9',
+          'gray-light':             '#e4eaec',
+          'gray-lighter':           '#edf1f2'
+        })
+        ;
+})();
+/**=========================================================
+ * Module: colors.js
+ * Services to retrieve global colors
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .service('Colors', Colors);
+
+    Colors.$inject = ['APP_COLORS'];
+    function Colors(APP_COLORS) {
+        this.byName = byName;
+
+        ////////////////
+
+        function byName(name) {
+          return (APP_COLORS[name] || '#fff');
+        }
+    }
+
+})();
+
 /**=========================================================
  * Module: flot.js
  * Initializes the Flot chart plugin and handles data refresh
@@ -2894,56 +3095,6 @@
     'use strict';
 
     angular
-        .module('app.colors')
-        .constant('APP_COLORS', {
-          'primary':                '#3F51B5',
-          'success':                '#4CAF50',
-          'info':                   '#2196F3',
-          'warning':                '#FF9800',
-          'danger':                 '#F44336',
-          'inverse':                '#607D8B',
-          'green':                  '#009688',
-          'pink':                   '#E91E63',
-          'purple':                 '#673AB7',
-          'dark':                   '#263238',
-          'yellow':                 '#FFEB3B',
-          'gray-darker':            '#232735',
-          'gray-dark':              '#3a3f51',
-          'gray':                   '#dde6e9',
-          'gray-light':             '#e4eaec',
-          'gray-lighter':           '#edf1f2'
-        })
-        ;
-})();
-/**=========================================================
- * Module: colors.js
- * Services to retrieve global colors
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.colors')
-        .service('Colors', Colors);
-
-    Colors.$inject = ['APP_COLORS'];
-    function Colors(APP_COLORS) {
-        this.byName = byName;
-
-        ////////////////
-
-        function byName(name) {
-          return (APP_COLORS[name] || '#fff');
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
         .module('app.core')
         .config(coreConfig);
 
@@ -3233,171 +3384,6 @@
     }
 
 })();
-/**=========================================================
- * Module: modals.js
- * Provides a simple way to implement bootstrap modals from templates
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.maps')
-        .controller('ModalGmapController', ModalGmapController);
-
-    ModalGmapController.$inject = ['$uibModal'];
-    function ModalGmapController($uibModal) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-
-          vm.open = function (size) {
-
-            //var modalInstance =
-            $uibModal.open({
-              templateUrl: '/myModalContent.html',
-              controller: ModalInstanceCtrl,
-              size: size
-            });
-          };
-
-          // Please note that $uibModalInstance represents a modal window (instance) dependency.
-          // It is not the same as the $uibModal service used above.
-
-          ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout'];
-          function ModalInstanceCtrl($scope, $uibModalInstance, $timeout) {
-
-            $uibModalInstance.opened.then(function () {
-              var position = new google.maps.LatLng(33.790807, -117.835734);
-
-              $scope.mapOptionsModal = {
-                zoom: 14,
-                center: position,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              };
-
-              // we use timeout to wait maps to be ready before add a markers
-              $timeout(function(){
-                // 1. Add a marker at the position it was initialized
-                new google.maps.Marker({
-                  map: $scope.myMapModal,
-                  position: position
-                });
-                // 2. Trigger a resize so the map is redrawed
-                google.maps.event.trigger($scope.myMapModal, 'resize');
-                // 3. Move to the center if it is misaligned
-                $scope.myMapModal.panTo(position);
-              });
-
-            });
-
-            $scope.ok = function () {
-              $uibModalInstance.close('closed');
-            };
-
-            $scope.cancel = function () {
-              $uibModalInstance.dismiss('cancel');
-            };
-
-          }
-
-        }
-    }
-
-})();
-
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.maps')
-        .controller('GMapController', GMapController);
-
-    GMapController.$inject = ['$timeout'];
-    function GMapController($timeout) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          var position = [
-              new google.maps.LatLng(33.790807, -117.835734),
-              new google.maps.LatLng(33.790807, -117.835734),
-              new google.maps.LatLng(33.790807, -117.835734),
-              new google.maps.LatLng(33.790807, -117.835734),
-              new google.maps.LatLng(33.787453, -117.835858)
-            ];
-          
-          vm.addMarker = addMarker;
-          // we use timeout to wait maps to be ready before add a markers
-          $timeout(function(){
-            addMarker(vm.myMap1, position[0]);
-            addMarker(vm.myMap2, position[1]);
-            addMarker(vm.myMap3, position[2]);
-            addMarker(vm.myMap5, position[3]);
-          });
-
-          vm.mapOptions1 = {
-            zoom: 14,
-            center: position[0],
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            scrollwheel: false
-          };
-
-          vm.mapOptions2 = {
-            zoom: 19,
-            center: position[1],
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-
-          vm.mapOptions3 = {
-            zoom: 14,
-            center: position[2],
-            mapTypeId: google.maps.MapTypeId.SATELLITE
-          };
-
-          vm.mapOptions4 = {
-            zoom: 14,
-            center: position[3],
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-
-          // for multiple markers
-          $timeout(function(){
-            addMarker(vm.myMap4, position[3]);
-            addMarker(vm.myMap4, position[4]);
-          });
-
-          // custom map style
-          var MapStyles = [{'featureType':'water','stylers':[{'visibility':'on'},{'color':'#bdd1f9'}]},{'featureType':'all','elementType':'labels.text.fill','stylers':[{'color':'#334165'}]},{featureType:'landscape',stylers:[{color:'#e9ebf1'}]},{featureType:'road.highway',elementType:'geometry',stylers:[{color:'#c5c6c6'}]},{featureType:'road.arterial',elementType:'geometry',stylers:[{color:'#fff'}]},{featureType:'road.local',elementType:'geometry',stylers:[{color:'#fff'}]},{featureType:'transit',elementType:'geometry',stylers:[{color:'#d8dbe0'}]},{featureType:'poi',elementType:'geometry',stylers:[{color:'#cfd5e0'}]},{featureType:'administrative',stylers:[{visibility:'on'},{lightness:33}]},{featureType:'poi.park',elementType:'labels',stylers:[{visibility:'on'},{lightness:20}]},{featureType:'road',stylers:[{color:'#d8dbe0',lightness:20}]}];
-          vm.mapOptions5 = {
-            zoom: 14,
-            center: position[3],
-            styles: MapStyles,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            scrollwheel: false
-          };
-
-          ///////////////
-          
-          function addMarker(map, position) {
-            return new google.maps.Marker({
-              map: map,
-              position: position
-            });
-          }
-
-        }
-    }
-})();
-
 
 (function() {
     'use strict';
@@ -4464,38 +4450,7 @@
                 $rootScope.app.layout.headerHome = false;
               }]
           })
-          .state('app.company', {
-              url: '/company/:id',
-              title: 'Company',
-              templateUrl: 'app/pages/company.html',
-              resolve: helper.resolveFor('moment', 'moment-plugins', 'socket', 'flot-chart', 'flot-chart-plugins', 'd3', 'orb')
-          })
-          .state('app.predictionAccuracy', {
-              url: '/prediction-accuracy',
-              title: 'Prediction accuracy',
-              templateUrl: 'app/pages/prediction-accuracy.html',
-              resolve: helper.resolveFor('moment', 'moment-plugins', 'flot-chart', 'flot-chart-plugins')
-          })
-          .state('app.features', {
-              url: '/features',
-              title: 'Features',
-              templateUrl: 'app/pages/features.html'
-          })
-          .state('app.pricing', {
-              url: '/pricing',
-              title: 'Pricing',
-              templateUrl: 'app/pages/pricing.html'
-          })
-          .state('app.investors', {
-              url: '/investors',
-              title: 'Investors',
-              templateUrl: 'app/pages/investors.html'
-          })
-          .state('app.faq', {
-              url: '/faq',
-              title: 'Faq',
-              templateUrl: 'app/pages/faq.html'
-          })
+
           .state('auth', {
               url: '/auth',
               templateUrl: 'app/pages/auth.html',
@@ -4539,185 +4494,23 @@
               title: 'confirm-account',
               templateUrl: 'app/pages/confirm-account.html'
           })
-
-
+            .state('profile1', {
+                url: '/profile1',
+                title: 'profile1',
+                templateUrl: 'app/pages/profile1.html'
+            })
+            .state('confirmAccount', {
+                url: '/confirmAccount',
+                title: 'confirmAccount',
+                templateUrl: 'app/pages/confirm-account.html'
+            })
 
             //
-          .state('app.welcome', {
-              url: '/welcome',
-              title: 'Welcome',
-              templateUrl: helper.basepath('welcome.html')
-          })
-          //
-          // Material
-          // -----------------------------------
-          .state('app.cards', {
-            url: '/cards',
-            title: 'Material Cards',
-            templateUrl: helper.basepath( 'material.cards.html' )
-          })
-          .state('app.forms', {
-            url: '/forms',
-            title: 'Material Forms',
-            templateUrl: helper.basepath( 'material.forms.html' )
-          })
-          .state('app.whiteframe', {
-            url: '/whiteframe',
-            title: 'Material Whiteframe',
-            templateUrl: helper.basepath( 'material.whiteframe.html' )
-          })
-          .state('app.matcolors', {
-            url: '/matcolors',
-            title: 'Material Colors',
-            templateUrl: helper.basepath( 'material.colors.html' )
-          })
-          .state('app.lists', {
-            url: '/lists',
-            title: 'Material Lists',
-            templateUrl: helper.basepath( 'material.lists.html' )
-          })
-          .state('app.inputs', {
-            url: '/inputs',
-            title: 'Material Inputs',
-            templateUrl: helper.basepath( 'material.inputs.html' )
-          })
-          .state('app.matwidgets', {
-            url: '/matwidgets',
-            title: 'Material Widgets',
-            templateUrl: helper.basepath( 'material.widgets.html' ),
-            resolve: helper.resolveFor('weather-icons', 'loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
-          })
-          .state('app.ngmaterial', {
-            url: '/ngmaterial',
-            title: 'ngMaterial',
-            templateUrl: helper.basepath( 'material.ngmaterial.html' )
-          })
-          //
-          // CUSTOM RESOLVES
-          //   Add your own resolves properties
-          //   following this object extend
-          //   method
-          // -----------------------------------
-          // .state('app.someroute', {
-          //   url: '/some_url',
-          //   templateUrl: 'path_to_template.html',
-          //   controller: 'someController',
-          //   resolve: angular.extend(
-          //     helper.resolveFor(), {
-          //     // YOUR RESOLVES GO HERE
-          //     }
-          //   )
-          // })
+         
+
           ;
 
     } // routesConfig
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.settings')
-        .run(settingsRun);
-
-    settingsRun.$inject = ['$rootScope', '$localStorage', '$location', '$window'];
-
-    function settingsRun($rootScope, $localStorage, $location, $window){
-
-
-      // User Settings
-      // -----------------------------------
-      $rootScope.user = {
-        name:     'John',
-        job:      'ng-developer',
-        picture:  'app/img/user/02.jpg'
-      };
-
-      // Hides/show user avatar on sidebar from any element
-      $rootScope.toggleUserBlock = function(){
-        $rootScope.$broadcast('toggleUserBlock');
-      };
-
-      // Global Settings
-      // -----------------------------------
-      $rootScope.app = {
-        name: 'HotStock',
-        description: 'Intelligence trading',
-        year: ((new Date()).getFullYear()),
-        layout: {
-          isFixed: true,
-          isCollapsed: false,
-          isBoxed: false,
-          isRTL: false,
-          horizontal: true,
-          isFloat: false,
-          asideHover: false,
-          theme: null,
-          asideScrollbar: false,
-          isCollapsedText: false,
-          headerHome: false
-        },
-        useFullLayout: false,
-        hiddenFooter: false,
-        offsidebarOpen: false,
-        asideToggled: false,
-        viewAnimation: 'ng-fadeInUp',
-        rtUrl: 'http://rt.wtst.io',
-        predictionsUrl: 'http://adjusted-predictions.wtst.io/v0.1',
-        historicalPredictionsUrl: 'http://historical-predictions.wtst.io/v0.1',
-        historicalStocksUrl: 'http://eod-stocks.wtst.io',
-        companiesUrl: 'http://companies.wtst.io',
-        newsUrl: 'http://yahoo-news.wtst.io',
-        serverUrl: 'http://web.wtst.io',
-        apiUrl: 'http://users.wtst.io/api',
-        templateDir: 'app/views/',
-        googleAnalyticsId: 'UA-96434544-1',
-        hashUrl: $location.hash()
-      };
-
-
-
-      // Setup the layout mode
-      // $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout === 'app-h') ;
-
-      // Restore layout settings [*** UNCOMMENT TO ENABLE ***]
-      // if( angular.isDefined($localStorage.layout) )
-      //   $rootScope.app.layout = $localStorage.layout;
-      // else
-      //   $localStorage.layout = $rootScope.app.layout;
-      //
-      // $rootScope.$watch('app.layout', function () {
-      //   $localStorage.layout = $rootScope.app.layout;
-      // }, true);
-
-      // Restore layout settings
-      if (angular.isDefined($localStorage.haloData)) {
-          $rootScope.app.haloApiData = $localStorage.haloData;
-      } else {
-          $localStorage.haloData = $rootScope.app.haloApiData;
-      }
-
-      $rootScope.$watch('app.haloApiData', function() {
-          $localStorage.haloData = $rootScope.app.haloApiData;
-      }, true);
-
-      // Close submenu when sidebar change from collapsed to normal
-      $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
-        if( newValue === false )
-          $rootScope.$broadcast('closeSidebarMenu');
-      });
-
-
-      // initialise google analytics
-      $window.ga('create', $rootScope.app.googleAnalyticsId, 'auto');
-
-      $rootScope.$on('$stateChangeSuccess', function() {
-        // track pageview on state change
-        $window.ga('send', 'pageview', { page: $location.path() });
-      });
-
-    }
 
 })();
 
@@ -4878,6 +4671,7 @@
     }
 })();
 
+
 (function() {
     'use strict';
 
@@ -4893,6 +4687,10 @@
             isLoggedIn: isLoggedIn,
             login: login,
             logout: logout,
+            register: register,
+            forgotPassword: forgotPassword,
+            resetPassword: resetPassword,
+            changePassword: changePassword
         };
 
         function isLoggedIn () {
@@ -4900,14 +4698,17 @@
         }
 
         function requestAuthToken (email, password) {
+
             var deferred = $q.defer();
 
-            apiService.post('/login', {
-                username: email,
+            apiService.post('/email/signin', {
+                email: email,
                 password: password
             }).then(
                 function(response) {
-                    deferred.resolve(response.session);
+
+                    debugger;
+                    deferred.resolve(response);
                 },
                 function(response) {
                     deferred.reject(response);
@@ -4918,38 +4719,129 @@
         }
 
         function setTocken (session) {
+            debugger;
             var now = new Date();
             now.setHours(now.getHours() + 2);
             var expires = now;
 
-            var token = session;
+            var token = session.accessToken;
             // var expires = session.time;
 
             authToken.save(token, expires);
         }
 
         function login (email, password) {
+
             var deferred = $q.defer();
+
             $cookies.remove('usertype', {
                 path: '/'
             });
             authToken.delete();
-            if(email=='admin@hotstock.com' && password=='admin'){
-                setTocken(Math.random());
-                deferred.resolve(Math.random());
-            }
-            else
-                deferred.reject('Invalid Credential.');
+
+            requestAuthToken(email, password).then(
+
+                function(session) {
+                    debugger;
+                    setTocken(session);
+                    deferred.resolve(session);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
 
             return deferred.promise;
         }
-        function logout () {
+
+        function register (name, username, email, password) {
+
             var deferred = $q.defer();
-            $cookies.remove('usertype', {
-                path: '/'
+
+            apiService.post('/email/signup', {
+                name: name,
+                username: username,
+                email: email,
+                password: password
+            }).then(
+
+                function(session) {
+                    debugger;
+                    setTocken(session);
+                    deferred.resolve(session);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function forgotPassword (email) {
+
+            var deferred = $q.defer();
+            var data = { email: email };
+
+            apiService.post('/login/forgot', data, false).then(
+                function(response) {
+                    deferred.resolve(response);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function resetPassword (email, password, key) {
+
+            var deferred = $q.defer();
+            var data = { email: email, password: password, key: key };
+
+            apiService.post('/login/reset', data, false).then(
+                function(response) {
+                    deferred.resolve(response);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function changePassword (currentPassword, newPassword) {
+
+            var deferred = $q.defer();
+            var data = { currentPassword: currentPassword, newPassword: newPassword };
+
+            apiService.post('/password/change/', data, false).then(
+                function(response) {
+                    deferred.resolve(response);
+                },
+                function(response) {
+                    deferred.reject(response);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function logout () {
+
+            var deferred = $q.defer();
+
+            apiService.post('/signout', false, true).finally(function() {
+                debugger;
+                $cookies.remove('usertype', {
+                    path: '/'
+                });
+                authToken.delete();
+                deferred.resolve();
             });
-            authToken.delete();
-            deferred.resolve();
+
             return deferred.promise;
         }
     }
@@ -5002,6 +4894,113 @@
             return false;
         }
     }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.settings')
+        .run(settingsRun);
+
+    settingsRun.$inject = ['$rootScope', '$localStorage', '$location', '$window'];
+
+    function settingsRun($rootScope, $localStorage, $location, $window){
+
+
+      // User Settings
+      // -----------------------------------
+      $rootScope.user = {
+        name:     'John',
+        job:      'ng-developer',
+        picture:  'app/img/user/02.jpg'
+      };
+
+      // Hides/show user avatar on sidebar from any element
+      $rootScope.toggleUserBlock = function(){
+        $rootScope.$broadcast('toggleUserBlock');
+      };
+
+      // Global Settings
+      // -----------------------------------
+      $rootScope.app = {
+        name: 'HotStock',
+        description: 'Intelligence trading',
+        year: ((new Date()).getFullYear()),
+        layout: {
+          isFixed: true,
+          isCollapsed: false,
+          isBoxed: false,
+          isRTL: false,
+          horizontal: true,
+          isFloat: false,
+          asideHover: false,
+          theme: null,
+          asideScrollbar: false,
+          isCollapsedText: false,
+          headerHome: false
+        },
+        useFullLayout: false,
+        hiddenFooter: false,
+        offsidebarOpen: false,
+        asideToggled: false,
+        viewAnimation: 'ng-fadeInUp',
+        rtUrl: 'http://rt.wtst.io',
+        predictionsUrl: 'http://adjusted-predictions.wtst.io/v0.1',
+        historicalPredictionsUrl: 'http://historical-predictions.wtst.io/v0.1',
+        historicalStocksUrl: 'http://eod-stocks.wtst.io',
+        companiesUrl: 'http://companies.wtst.io',
+        newsUrl: 'http://yahoo-news.wtst.io',
+        serverUrl: 'http://web.wtst.io',
+        apiUrl: 'http://hotstock-auth.wtst.io/v0.0',
+        templateDir: 'app/views/',
+        googleAnalyticsId: 'UA-96434544-1',
+        hashUrl: $location.hash()
+      };
+
+
+
+      // Setup the layout mode
+      // $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout === 'app-h') ;
+
+      // Restore layout settings [*** UNCOMMENT TO ENABLE ***]
+      // if( angular.isDefined($localStorage.layout) )
+      //   $rootScope.app.layout = $localStorage.layout;
+      // else
+      //   $localStorage.layout = $rootScope.app.layout;
+      //
+      // $rootScope.$watch('app.layout', function () {
+      //   $localStorage.layout = $rootScope.app.layout;
+      // }, true);
+
+      // Restore layout settings
+      if (angular.isDefined($localStorage.haloData)) {
+          $rootScope.app.haloApiData = $localStorage.haloData;
+      } else {
+          $localStorage.haloData = $rootScope.app.haloApiData;
+      }
+
+      $rootScope.$watch('app.haloApiData', function() {
+          $localStorage.haloData = $rootScope.app.haloApiData;
+      }, true);
+
+      // Close submenu when sidebar change from collapsed to normal
+      $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
+        if( newValue === false )
+          $rootScope.$broadcast('closeSidebarMenu');
+      });
+
+
+      // initialise google analytics
+      $window.ga('create', $rootScope.app.googleAnalyticsId, 'auto');
+
+      $rootScope.$on('$stateChangeSuccess', function() {
+        // track pageview on state change
+        $window.ga('send', 'pageview', { page: $location.path() });
+      });
+
+    }
+
 })();
 
 /**=========================================================
@@ -5365,1408 +5364,6 @@
     }
 })();
 
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks company controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .controller('StocksCompanyController', StocksCompanyController);
-
-  StocksCompanyController.$inject = ['$rootScope', '$location', '$q', '$stateParams', '$timeout', '$http', 'stocksService'];
-    function StocksCompanyController($rootScope, $location, $q, $stateParams, $timeout, $http, stocksService) {
-      var vm = this;
-
-      vm.ticker = $stateParams.id;
-      vm.companyInfo = {
-        bid: 0,
-        ask: 0,
-        last: 0,
-        high: 0,
-        low: 0,
-        prevClose: 0,
-        marketCap: 0,
-        volume: 0
-      };
-      vm.change = 0;
-      vm.changePercent = 0;
-      vm.predictionCange = 0;
-      $rootScope.app.hashUrl = $location.url();
-
-      stocksService.getCompanyBySymbol(vm.ticker)
-          .then(function (tickers) {
-            if (!tickers.length) {
-              return $q.reject(tickers);
-            }
-
-            vm.companyInfo = Object.assign(vm.companyInfo, tickers[0]);
-          });
-
-      stocksService.getPredictionsByDays(vm.ticker, 10)
-          .then(function (predictions) {
-            vm.predictions = predictions[vm.ticker];
-          });
-
-      var firsDay = moment().utc().businessSubtract(5).format('YYYY-MM-DD');
-
-      stocksService.getHistoricalPredictions(vm.ticker, firsDay)
-          .then(function (historical) {
-            vm.historical = historical[vm.ticker];
-          });
-
-      stocksService.getHistoricalStocks(vm.ticker, moment().utc().businessSubtract(1).format('YYYY-MM-DD'))
-          //todo use new api for all values
-          .then(function (historicalPredictions) {
-            if (historicalPredictions[vm.ticker].length) {
-              vm.companyInfo.high = historicalPredictions[vm.ticker][0][2];
-              vm.companyInfo.low = historicalPredictions[vm.ticker][0][3];
-              vm.companyInfo.prevClose = historicalPredictions[vm.ticker][0][4];
-              vm.companyInfo.volume = historicalPredictions[vm.ticker][0][5];
-
-              vm.previousClose = {
-                date: historicalPredictions[vm.ticker][0][0],
-                price: historicalPredictions[vm.ticker][0][4]
-              };
-            }
-          });
-
-      var serverConnection;
-
-
-      function getYahooQuotes (ticker) {
-        var url = 'http://query.yahooapis.com/v1/public/yql';
-        var data = encodeURIComponent('select * from yahoo.finance.quotes where symbol in ("' + ticker + '")');
-        var params = "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-
-        return $http({
-          method: 'GET',
-          url: url + '?q=' + data + params
-        }).then(function successCallback(response) {
-          return response.data;
-        });
-      }
-
-      getYahooQuotes(vm.ticker)
-          .then(function (quotes) {
-            if (quotes.query.results) {
-              vm.companyInfo.bid = parseFloat(quotes.query.results.quote.Bid);
-              vm.companyInfo.ask = parseFloat(quotes.query.results.quote.Ask);
-              vm.companyInfo.last = parseFloat(quotes.query.results.quote.LastTradePriceOnly);
-              vm.companyInfo.marketCap = quotes.query.results.quote.MarketCapitalization;
-            }
-          });
-
-      connectRealTime();
-
-      this.$onDestroy = function () {
-        if (serverConnection) serverConnection.disconnect();
-      };
-
-      function connectRealTime() {
-        var STOCKS_REAL_TIME_URL = $rootScope.app.rtUrl;
-
-        serverConnection = io(STOCKS_REAL_TIME_URL);
-
-        serverConnection.on('quote', updateTicker);
-
-        serverConnection.on('connect', function() {
-          serverConnection.emit('subscribe', [vm.ticker]);
-        });
-
-        function updateTicker (data) {
-          if (data.ticker !== vm.ticker) return;
-
-          $timeout(function () {
-            var priceStyle = '';
-            if (vm.companyInfo[data.type] < data.price) priceStyle = 'text-success';
-            if (vm.companyInfo[data.type] > data.price) priceStyle = 'text-danger';
-
-            var priceElement = $('#value_' + data.type);
-            if (priceStyle && priceElement.length) {
-              priceElement.text(data.price.toFixed(2));
-
-              if (priceElement.get(0).timer) clearTimeout(priceElement.get(0).timer);
-              priceElement.removeClass('text-success text-danger').addClass(priceStyle);
-              priceElement.get(0).timer = setTimeout(function(){
-                priceElement.removeClass('text-success text-danger');
-              }, 2000);
-            }
-
-            vm.companyInfo[data.type] = data.price;
-
-            var price = vm.companyInfo.prevClose;
-            //get change for tomorrow
-            if (price !== 0) {
-              vm.change = vm.companyInfo.last - price;
-              vm.changePercent = (100 * vm.change/price).toFixed(2);
-            }
-
-            if (vm.predictions && vm.predictions.length) {
-              var predictionChange = vm.predictions[0].prediction - vm.companyInfo.last;
-              vm.predictionCange = (100 * predictionChange/vm.companyInfo.last).toFixed(2);
-            }
-
-          });
-        }
-
-      }
-
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .component('stocksMlpChart', {
-          template: '<flot dataset="$ctrl.areaData" options="$ctrl.areaOptions" callback="$ctrl.initialed" height="350px"></flot>',
-          bindings: {
-            historical: '<'
-          },
-          controller: StocksMlpChartController
-        });
-
-  StocksMlpChartController.$inject = ['$rootScope'];
-    function StocksMlpChartController($rootScope) {
-
-      var vm = this;
-
-      var plot;
-
-      vm.initialed = function (p) {
-        plot = p;
-      };
-
-      vm.areaOptions = getAreaOptions();
-      vm.areaData = getAreaData();
-
-      vm.$onChanges = function () {
-        if (vm.historical) drawChart();
-      };
-
-      function getMinYaxis () {
-        var min = Infinity;
-        var max = 0;
-
-        vm.areaData.forEach(function (item) {
-          item.data.forEach(function (point) {
-            var price = point[1];
-            if (min > price) min = price;
-            if (max < price) max = price;
-          });
-        });
-
-        if (min === Infinity) return 0;
-
-        min = 2*min - max;
-        if (min > 0) return Math.floor(min);
-
-        return 0;
-      }
-
-      function drawChart() {
-        var historicalData = getHistoricalData(vm.historical);
-
-        vm.areaData[0].data = historicalData.predictions;
-        vm.areaData[1].data = historicalData.real;
-
-        if (plot) {
-          plot.getOptions().yaxes[0].min = getMinYaxis();
-          plot.setData(vm.areaData);
-          plot.setupGrid();
-          plot.draw();
-        }
-      }
-
-      function getHistoricalData (historical) {
-        var real = [];
-        var predictions = [];
-
-        if (historical) {
-
-          var offsetByDay = moment(moment().format('YYYY-MM-DD')).diff(moment().utc().format('YYYY-MM-DD'))/60000; //minutes
-
-          historical.dates.forEach(function (date, index) {
-
-            var dateX = moment(date + 'T00:00:00.000Z')
-                .add(offsetByDay - moment().utcOffset(), 'm')
-                .add(1, 'd')
-                .format('x');
-
-            if (historical.closePrices[index]) {
-              real.push([
-                dateX,
-                historical.closePrices[index]
-              ]);
-            }
-
-            if (historical.predictions[index]) {
-              predictions.push([
-                dateX,
-                historical.predictions[index]
-              ]);
-            }
-          });
-        }
-
-        return {
-          real: real,
-          predictions: predictions
-        };
-      }
-
-      function getAreaData () {
-        return [
-          {
-            "label": "Historical prediction",
-            "color": "#4f71df",
-            points: {
-              show: true,
-              radius: 3
-            },
-            lines: {
-              show: true
-            },
-            "data": []
-          },
-          {
-            "label": "Historical prices",
-            "color": "#ff786d",
-            points: {
-              show: true,
-              radius: 3
-            },
-            lines: {
-              show: true
-            },
-            "data": []
-          }
-        ];
-      }
-
-      function getAreaOptions () {
-
-        return {
-          legend: {
-            show: true,
-            position: "se",
-            backgroundOpacity: 0.5
-          },
-          grid: {
-            borderColor: '#eee',
-            borderWidth: 1,
-            hoverable: true,
-            backgroundColor: '#fcfcfc',
-            markings: []
-          },
-          tooltip: true,
-          tooltipOpts: {
-            content: function (label, x, y) { return y.toFixed(2); }
-          },
-          xaxis: {
-            tickColor: '#fcfcfc',
-            mode: 'time',
-            timezone: "browser",
-            tickSize: [1, 'day'],
-            timeformat: "%b %d"
-          },
-          yaxis: {
-            min: 0,
-            minTickSize: 1,
-            tickColor: '#eee',
-            position: ($rootScope.app.layout.isRTL ? 'right' : 'left'),
-            tickFormatter: function (v) {
-              return v;
-            }
-          },
-          shadowSize: 0
-        };
-      }
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks mlp controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .controller('StocksMlpController', StocksMlpController);
-
-  StocksMlpController.$inject = ['stocksService'];
-    function StocksMlpController(stocksService) {
-      var vm = this;
-
-      vm.tickers = [];
-      vm.date = new Date('2017-03-16'); //todo set subtract day
-      vm.minDate = new Date('2017-03-16');
-      vm.maxDate = moment().businessSubtract(2)._d;
-
-      vm.onlyWeekendsPredicate = function(date) {
-        var day = date.getDay();
-        return day !== 0 && day !== 6;
-      };
-
-      vm.loadData = function () {
-        var ticker = vm.ticker.tickerSymbol;
-        var date = moment(vm.date).format('YYYY-MM-DD');
-
-        stocksService.getHistoricalPredictions(ticker, date)
-            .then(function (historical) {
-              vm.historical = historical[ticker];
-            });
-      };
-
-      stocksService.getCompanies()
-          .then(function (tickers) {
-            vm.tickers = tickers
-                .filter(function(ticker) { //todo remove Microsoft
-                  return ticker.tickerSymbol !== "MSFT";
-                });
-
-            vm.ticker = vm.tickers[0];
-            vm.loadData();
-            return vm.tickers;
-          });
-
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .component('stocksNews', {
-          templateUrl: 'app/views/stocks.news.html',
-          bindings: {
-            ticker: '<'
-          },
-          controller: StocksNewsController,
-          controllerAs: 'news'
-        });
-
-  StocksNewsController.$inject = ['$rootScope', '$timeout'];
-    function StocksNewsController($rootScope, $timeout) {
-      var vm = this;
-
-      vm.list = [];
-
-      init(vm.ticker);
-
-      var serverConnection;
-
-
-      function init(ticker) {
-        var STOCKS_REAL_TIME_URL = $rootScope.app.newsUrl;
-
-        var serverConnection = io(STOCKS_REAL_TIME_URL, { path: '/v0.1/socket.io' });
-        serverConnection.on('connect', function() {
-          serverConnection.emit('ticker', ticker);
-        });
-        serverConnection.on('news', updateTicker);
-
-        function updateTicker (data) {
-          if (typeof data === 'string') data = JSON.parse(data);
-
-          if (data.news) {
-            $timeout(function () {
-              vm.list = [].concat(data.news, vm.list);
-            });
-          }
-        }
-      }
-
-      this.$onDestroy = function () {
-        if (serverConnection) serverConnection.disconnect();
-      };
-
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .component('stocksPredictionChart', {
-          template: '<flot dataset="$ctrl.areaData" options="$ctrl.areaOptions" callback="$ctrl.initialed" height="350px"></flot>',
-          bindings: {
-            current: '<',
-            historical: '<',
-            predictions: '<',
-            previousClose: '<'
-          },
-          controller: StocksPredictionChartController
-        });
-
-  StocksPredictionChartController.$inject = ['$rootScope'];
-    function StocksPredictionChartController($rootScope) {
-
-      var vm = this;
-
-      var plot;
-
-      vm.initialed = function (p) {
-        plot = p;
-      };
-
-      vm.areaOptions = getAreaOptions();
-      vm.areaData = getAreaData();
-
-      vm.$onChanges = function () {
-        if (vm.predictions) drawChart();
-      };
-
-      function getMinYaxis () {
-        var min = Infinity;
-        var max = 0;
-
-        vm.areaData.forEach(function (item) {
-          item.data.forEach(function (point) {
-            var price = point[1];
-            if (min > price) min = price;
-            if (max < price) max = price;
-          });
-        });
-
-        if (min === Infinity) return 0;
-
-        min = 2*min - max;
-        if (min > 0) return Math.floor(min);
-
-        return 0;
-      }
-
-      function drawChart() {
-        var current = getCurrentPrice(vm.current);
-        var historicalData = getHistoricalData(vm.historical);
-        var predictionsData = getPredictionsData(vm.predictions);
-        // var previousClose = getPreviousCloseData(vm.previousClose);
-
-        if (predictionsData.length && historicalData.predictions.length) {
-          if (predictionsData[0][0] === historicalData.predictions[historicalData.predictions.length-1][0]) {
-            predictionsData.splice(0,1);
-          }
-        }
-
-        if (current[0] && predictionsData.length && historicalData.predictions.length) {
-          if (moment(+current[0][0]).date() !== moment().date()) {
-            predictionsData.unshift(historicalData.predictions.pop());//utc>
-          }
-        }
-
-        var predictions = [].concat(historicalData.predictions, predictionsData.slice(0,1));
-        var predictionTomorrow = predictionsData.slice(0, 2);
-        var predictionExperimental = predictionsData.slice(1);
-
-        var real = [].concat(historicalData.real);
-
-        if (real.length && current.length) {
-          if (real[real.length-1][0] === current[0][0]) {
-            current[0] = real[real.length-1];
-          } else {
-            real.push(current[0]);
-          }
-        }
-
-        if (predictionsData.length) current.push(predictionsData[0]);
-
-        vm.areaData[0].data = predictionTomorrow;
-        vm.areaData[1].data = predictions;
-        vm.areaData[2].data = real;
-        vm.areaData[3].data = current;
-        vm.areaData[4].data = predictionExperimental;
-
-        if (plot) {
-          plot.getOptions().yaxes[0].min = getMinYaxis();
-          plot.setData(vm.areaData);
-          plot.setupGrid();
-          plot.draw();
-        }
-      }
-
-      function getPreviousCloseData (previousClose) {
-        if(!previousClose) return;
-        return [
-          // moment(vm.previousClose.date).format('x'),
-          moment().set({hour:0,minute:0,second:0,millisecond:0}).format('x'),
-          vm.previousClose.price
-        ];
-      }
-
-      function getNow () {
-        var now = moment();
-        var nowUTC = moment().utc();
-        var minutes = now.get('minutes');
-        var hour = nowUTC.get('hour');
-
-        if(now.day() === 0 && now.day() === 6) return now;
-
-        if (hour >= 15 && hour < 21) {
-          now.set({hour:4 * (hour - 15), minute:0}).add(4 * minutes, 'minutes');
-        } else {
-          if (now.date() === nowUTC.date()) {
-            if (hour < 15) {
-              now.set({hour:0,minute:0,second:0,millisecond:0});
-            } else {
-              now.set({hour:24,minute:0,second:0,millisecond:0});
-            }
-          } else {
-            if (now.get('hour') < 15) {
-              now.set({hour:0,minute:0,second:0,millisecond:0});
-            } else {
-              now.set({hour:24,minute:0,second:0,millisecond:0});
-            }
-          }
-        }
-
-        return now;
-      }
-
-      function getCurrentPrice(current) {
-        var now = getNow();
-
-        if (!current) return [];
-        return [[
-          now.format('x'),
-          current
-        ]];
-      }
-
-      function getPredictionsData (predictions) {
-        var predictionsPrices = [];
-
-        if (!predictions) return [];
-
-        var offsetByDay = moment(moment().format('YYYY-MM-DD')).diff(moment().utc().format('YYYY-MM-DD'))/60000; //minutes
-
-        predictions.forEach(function (predictionItem) {
-          if (predictionItem.prediction) {
-
-            var date = moment
-                .utc(predictionItem.prediction_date).set({hour:21,minute:0,second:0,millisecond:0})
-                .add(3, 'h') //move to midnight
-                .add(-moment().utcOffset(), 'm')
-                .format('x');
-
-            predictionsPrices.push([
-              date,
-              predictionItem.prediction
-            ]);
-          }
-        });
-
-        return predictionsPrices;
-      }
-
-      function getHistoricalData (historical) {
-        var real = [];
-        var predictions = [];
-
-        if (historical) {
-
-          var offsetByDay = moment(moment().format('YYYY-MM-DD')).diff(moment().utc().format('YYYY-MM-DD'))/60000; //minutes
-
-          historical.dates.forEach(function (date, index) {
-
-            var dateX = moment.utc(date)
-                .set({hour:21,minute:0,second:0,millisecond:0})
-                .add(3, 'h') //move to midnight
-                .add(-moment().utcOffset(), 'm')
-                .format('x');
-
-            if (historical.closePrices[index]) {
-              real.push([
-                dateX,
-                historical.closePrices[index]
-              ]);
-            }
-
-            if (historical.predictions[index]) {
-              predictions.push([
-                dateX,
-                historical.predictions[index]
-              ]);
-            }
-          });
-        }
-
-        return {
-          real: real,
-          predictions: predictions
-        };
-      }
-
-      function getAreaData () {
-        return [
-          {
-            "label": "Prediction for tomorrow",
-            "color": "#63abdf",
-            points: {
-              show: true,
-              radius: 3
-            },
-              lines: {
-                show: true
-              },
-            "data": []
-          },
-          {
-            "label": "Historical prediction",
-            "color": "#4f71df",
-            points: {
-              show: true,
-              radius: 3
-            },
-            lines: {
-              show: true
-            },
-            "data": []
-          },
-          {
-            "label": "Historical prices",
-            "color": "#ff786d",
-            points: {
-              show: true,
-              radius: 3
-            },
-            lines: {
-              show: true
-            },
-            "data": []
-          },
-          {
-            "label": "Real-time price",
-            "color": "#ffb093",
-            dashes: { show: true, dashLength: 2 },
-            points: {
-              show: true,
-              radius: 3
-            },
-            "data": []
-          },
-          {
-            "label": "Prediction (experimental)",
-            "color": "#add2df",
-            dashes: { show: true },
-            points: {
-              show: true,
-              radius: 3
-            },
-            "data": []
-          }
-        ];
-      }
-
-      function getAreaOptions () {
-        var today = moment().set({hour:0,minute:0,second:0,millisecond:0}).format('x');
-        var yesterday = moment().set({hour:24,minute:0,second:0,millisecond:0}).format('x');
-
-        var now = getNow();
-
-        return {
-          legend: {
-            show: true,
-            position: "se",
-            backgroundOpacity: 0.5
-          },
-          grid: {
-            borderColor: '#eee',
-            borderWidth: 1,
-            hoverable: true,
-            backgroundColor: '#fcfcfc',
-            markings: [
-              {
-                xaxis: {
-                  from: today,
-                  to: yesterday
-                },
-                color: "#f6f6f6"
-              },
-              {
-                xaxis: {
-                  from: now.format('x'),
-                  to: now.format('x')
-                },
-                color: "#ddd"
-              }
-            ]
-          },
-          tooltip: true,
-          tooltipOpts: {
-            content: function (label, x, y) { return y.toFixed(2); }
-          },
-          xaxis: {
-            tickColor: '#fcfcfc',
-            mode: 'time',
-            timezone: "browser",
-            tickSize: [1, 'day'],
-            timeformat: "%b %d"
-          },
-          yaxis: {
-            min: 0,
-            minTickSize: 1,
-            tickColor: '#eee',
-            position: ($rootScope.app.layout.isRTL ? 'right' : 'left'),
-            tickFormatter: function (v) {
-              return v;
-            }
-          },
-          shadowSize: 0
-        };
-      }
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .component('stocksTableChart', {
-          template: '<flot dataset="$ctrl.areaData" options="$ctrl.areaOptions" callback="$ctrl.initialed" height="100px" width="200px"></flot>',
-          bindings: {
-            historical: '<',
-            predictions: '<'
-          },
-          controller: StocksTableChartController
-        });
-
-  StocksTableChartController.$inject = ['$rootScope'];
-    function StocksTableChartController($rootScope) {
-
-      var vm = this;
-
-      var plot;
-
-      vm.initialed = function (p) {
-        plot = p;
-      };
-
-      vm.$onChanges = function () {
-        if (vm.predictions && vm.historical) drawChart();
-      };
-
-      function getMinYaxis (data) {
-        var min = Infinity;
-        var max = 0;
-
-        data.forEach(function (item) {
-          item.data.forEach(function (point) {
-            var price = point[1];
-            if (min > price) min = price;
-            if (max < price) max = price;
-          });
-        });
-
-        if (min === Infinity) return 0;
-
-        min = 2*min - max;
-        if (min > 0) return Math.floor(min);
-
-        return 0;
-      }
-
-      function drawChart() {
-        var historicalData = getHistoricalData(vm.historical);
-        var predictionsData = getPredictionsData(vm.predictions);
-
-        try {
-          if (historicalData.prices[4][0] === predictionsData[0][0]) {
-            predictionsData.splice(0,1);
-          }
-        } catch (e) {}
-
-        var data = getAreaData();
-        data[0].data = historicalData.predictions; //Historical prediction
-        data[1].data = historicalData.prices; //Historical prices
-        data[2].data = predictionsData.slice(0, 5); //Prediction (experimental)
-
-        data[0].data.push(predictionsData[0]);
-        data[1].data.push(predictionsData[0]);
-
-        var options = getAreaOptions();
-        options.yaxis.min = getMinYaxis(data);
-
-        vm.areaOptions = options;
-        vm.areaData = data;
-      }
-
-      function getPredictionsData (predictions) {
-        var predictionsPrices = [];
-
-        if (!predictions) return [];
-
-        predictions.forEach(function (predictionItem) {
-          if (predictionItem.prediction) {
-            predictionsPrices.push([
-              moment(predictionItem.prediction_date).format('x'), //todo
-              predictionItem.prediction
-            ]);
-          }
-        });
-
-        return predictionsPrices;
-      }
-
-      function getHistoricalData (historical) {
-        var prices = [];
-        var predictions = [];
-
-        if (historical) {
-
-          historical.dates.forEach(function (date, index) {
-
-            var dateX = moment(date + 'T00:00:00.000Z').format('x');
-
-            if (historical.closePrices[index]) {
-              prices.push([
-                dateX,
-                historical.closePrices[index]
-              ]);
-            }
-
-            if (historical.predictions[index]) {
-              predictions.push([
-                dateX,
-                historical.predictions[index]
-              ]);
-            }
-          });
-        }
-
-        return {
-          prices: prices,
-          predictions: predictions
-        };
-      }
-
-      function getAreaData (predictions) {
-        return [
-          {
-            "label": "Historical prediction",
-            "color": "#4f71df",
-            points: { show: false, radius: 2 },
-            lines: { show: true },
-            "data": []
-          },
-          {
-            "label": "Historical prices",
-            "color": "#ff786d",
-            points: { show: false, radius: 2 },
-            lines: { show: true },
-            "data": []
-          },
-          {
-            "label": "Prediction (experimental)",
-            "color": "#4f71df",
-            points: { show: false, radius: 2 },
-            dashes: { show: true, dashLength: 5 },
-            "data": []
-          }
-        ];
-      }
-
-      function getAreaOptions () {
-        return {
-          legend: {
-            show: false,
-          },
-          grid: {
-            borderColor: '#eee',
-            borderWidth: 1,
-            hoverable: true,
-            backgroundColor: '#fcfcfc'
-          },
-          tooltip: true,
-          tooltipOpts: {
-            content: function (label, x, y) { return y.toFixed(2); }
-          },
-          xaxis: {
-            tickColor: '#fcfcfc',
-            mode: 'time',
-            timezone: "browser",
-            tickSize: [1, 'day'],
-            timeformat: "%d",
-            font:{
-              size: 9
-            }
-          },
-          yaxis: {
-            min: 0,
-            minTickSize: 1,
-            tickColor: '#eee',
-            position: ($rootScope.app.layout.isRTL ? 'right' : 'left'),
-            tickFormatter: function (v) {
-              return v;
-            },
-            font:{
-              size: 9
-            }
-          },
-          shadowSize: 0
-        };
-      }
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-  'use strict';
-  angular
-      .module('app.stocks')
-      .component('stocksTableSeparate', {
-        templateUrl: 'app/views/stocks.table.html',
-        controller: StocksTableSeparateController,
-        controllerAs: 'stocks'
-      });
-
-  StocksTableSeparateController.$inject = ['$rootScope', '$timeout', 'stocksService'];
-  function StocksTableSeparateController($rootScope, $timeout, stocksService) {
-    var vm = this;
-
-    vm.tickers = [];
-    vm.realTime = false;
-    vm.forecastDay = -1;
-
-    vm.showTable = showTable;
-    vm.getForecast = getForecast;
-
-    var serverConnection;
-
-    this.$onDestroy = function () {
-      if (serverConnection) serverConnection.disconnect();
-    };
-
-    var tickers = stocksService.getCompanies()
-        .then(function (tickers) {
-          vm.tickers = tickers
-              .filter(function(ticker) { //todo remove Microsoft
-                return ticker.tickerSymbol !== "MSFT";
-              })
-              .map(function(ticker) {
-                ticker.ask = 0;
-                ticker.bid = 0;
-                ticker.last = 0;
-                ticker.date = moment().format();
-                return ticker;
-              });
-          return vm.tickers;
-        })
-        .then(function (tickers) {
-          var symbols = tickers.map(function (item) { return item.tickerSymbol;});
-
-          //load predictions
-          stocksService.getPredictionsByDays(symbols, 9)
-              .then(function (predictions) {
-                tickers.forEach(function (item) {
-                  item.predictions = predictions[item.tickerSymbol];
-                });
-              });
-
-          return tickers;
-        });
-
-    showTable(0);
-
-    function showTable(forecastDay) {
-      if (vm.forecastDay === forecastDay) return;
-
-      vm.forecastDay = forecastDay;
-      if (forecastDay === 0) {
-        connectRealTime();
-      } else {
-        if (serverConnection) serverConnection.disconnect();
-      }
-    }
-
-    function getForecast(item) {
-      if (vm.forecastDay > 0) {
-        return getForecasts(item, vm.forecastDay);
-      }
-
-      return getToday(item);
-    }
-
-
-    function getToday (item) {
-      return {
-        trend: '',
-        prediction: item.last,
-        change: 0,
-        changePercent: '0.0',
-        prediction_date: item.date
-      };
-    }
-
-
-    function getForecasts(item, day) {
-      if(!item.predictions) {
-        return getToday(item);
-      }
-      var forecast = item.predictions[day-1];
-
-      if(!forecast) {
-        return getToday(item);
-      }
-
-      if (item.last === 0) {
-        return {
-          trend: '',
-          prediction: forecast.prediction,
-          change: 0,
-          changePercent: (0).toFixed(2),
-          prediction_date: forecast.prediction_date
-        };
-      }
-
-      var change = forecast.prediction - item.last;
-
-      return {
-        trend: change > 0 ? 'text-success' : 'text-danger',
-        prediction: forecast.prediction,
-        change: change,
-        changePercent: (100 * change /item.last).toFixed(2),
-        prediction_date: forecast.prediction_date
-      };
-    }
-
-    function connectRealTime() {
-      var STOCKS_REAL_TIME_URL = $rootScope.app.rtUrl;
-
-      serverConnection = io(STOCKS_REAL_TIME_URL);
-
-      serverConnection.on('quote', updateTicker);
-
-      serverConnection.on('connect', function() {
-        tickers.then(function () {
-          var tickers = vm.tickers.map(function(ticker) {return ticker.tickerSymbol;});
-          serverConnection.emit('subscribe', tickers);
-        });
-      });
-
-      function updateTicker (data) {
-        if (!vm.realTime) {
-          if (data.source === 'source') $timeout(function () { vm.realTime = true; });
-        }
-
-        var index = vm.tickers.findIndex(function (t) { return data.ticker === t.tickerSymbol; });
-
-        if (index >= 0) {
-          var date = new Date(Math.floor(data.timestamp * 1000)).toISOString();
-
-          var time = moment(vm.tickers[index].date).format('h:mm:ss');
-          var quoteDate = moment(vm.tickers[index].date).format('YYYY-MM-DD');
-          var price = '$' + parseFloat(data.price).toFixed(2);
-
-          var tickerElement = $('.ticker.'+ data.ticker);
-          var priceElement = tickerElement.find('.ticker_' + data.type);
-          var dateElement = tickerElement.find('.ticker_date');
-          var timeElement = tickerElement.find('.ticker_time');
-
-          var priceStyle = '';
-          if (vm.tickers[index][data.type] < data.price) priceStyle = 'text-success';
-          if (vm.tickers[index][data.type] > data.price) priceStyle = 'text-danger';
-
-          priceElement.text(price);
-          dateElement.text(quoteDate);
-          timeElement.text(time);
-
-          if (priceStyle && priceElement.length) {
-            if (priceElement.get(0).timer) clearTimeout(priceElement.get(0).timer);
-            priceElement.removeClass('text-success text-danger').addClass(priceStyle);
-            priceElement.get(0).timer = setTimeout(function(){
-              priceElement.removeClass('text-success text-danger');
-            }, 2000);
-          }
-
-          vm.tickers[index][data.type] = data.price;
-          vm.tickers[index].date = date;
-        }
-      }
-
-    }
-
-  }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.stocks')
-        .component('stocksTable', {
-          templateUrl: 'app/views/stocks.table.html',
-          controller: StocksTableController,
-          controllerAs: 'stocks'
-        });
-
-  StocksTableController.$inject = ['$rootScope', '$scope', '$timeout', 'stocksService'];
-    function StocksTableController($rootScope, $scope, $timeout, stocksService) {
-      var vm = this;
-
-      vm.tickers = [];
-      vm.realTime = false;
-      vm.forecastDay = -1;
-
-      vm.getForecast = getForecast;
-
-      var serverConnection;
-
-      this.$onDestroy = function () {
-        if (serverConnection) serverConnection.disconnect();
-      };
-
-      var tickers = stocksService.getCompanies()
-        .then(function (tickers) {
-          vm.tickers = tickers
-              .filter(function(ticker) { //todo remove Microsoft
-                return ticker.tickerSymbol !== "MSFT";
-              })
-              .map(function(ticker) {
-                ticker.ask = 0;
-                ticker.bid = 0;
-                ticker.last = 0;
-                ticker.date = moment().format();
-                return ticker;
-              });
-          connectRealTime();
-          return vm.tickers;
-        })
-        .then(function (tickers) {
-          var symbols = tickers.map(function (item) { return item.tickerSymbol;});
-
-          //load predictions
-          stocksService.getPredictionsByDays(symbols, 9)
-              .then(function (predictions) {
-                tickers.forEach(function (item) {
-                  item.predictions = predictions[item.tickerSymbol];
-                });
-              });
-
-          //load historical prices
-          var date = moment().utc().businessSubtract(5).format('YYYY-MM-DD');
-          stocksService.getHistoricalPredictions(symbols, date)
-              .then(function (historical) {
-                tickers.forEach(function (item) {
-                  item.historical = historical[item.tickerSymbol];
-                });
-              });
-
-
-          return tickers;
-        });
-
-      function getForecast(item, day) {
-        if (item.predictions && item.predictions[day-1]) {
-          var forecast = item.predictions[day-1];
-          var change = forecast.prediction - item.last;
-          var changePercent = item.last === 0 ? 0 : (100 * change /item.last);
-          return {
-            trend: item.last === 0 ? '' : (change > 0 ? 'text-success' : 'text-danger'),
-            prediction: forecast.prediction,
-            change: change,
-            changePercent: changePercent,
-            changeFormatted: (change > 0 ? '+' :'') + change.toFixed(2) + ' (' + (changePercent > 0 ? '+' :'') + changePercent.toFixed(2) + '%)',
-            prediction_date: forecast.prediction_date
-          };
-        }
-      }
-
-      function connectRealTime() {
-        var STOCKS_REAL_TIME_URL = $rootScope.app.rtUrl;
-
-        serverConnection = io(STOCKS_REAL_TIME_URL);
-
-        serverConnection.on('quote', updateTicker);
-
-        serverConnection.on('connect', function() {
-          tickers.then(function () {
-            var tickers = vm.tickers.map(function(ticker) {return ticker.tickerSymbol;});
-            serverConnection.emit('subscribe', tickers);
-          });
-        });
-
-        function updateTicker (data) {
-          var index = vm.tickers.findIndex(function (t) { return data.ticker === t.tickerSymbol; });
-
-          if (index >= 0) {
-             var date = new Date(Math.floor(data.timestamp * 1000)).toISOString();
-
-            var time = moment(vm.tickers[index].date).format('h:mm:ss');
-            var quoteDate = moment(vm.tickers[index].date).format('YYYY-MM-DD');
-            var price = parseFloat(data.price).toFixed(2);
-
-            var tickerElement = $('.ticker.'+ data.ticker);
-            var priceElement = tickerElement.find('.ticker_' + data.type);
-            var dateElement = tickerElement.find('.ticker_date');
-            var timeElement = tickerElement.find('.ticker_time');
-
-            var priceStyle = '';
-            if (vm.tickers[index][data.type] < data.price) priceStyle = 'text-success';
-            if (vm.tickers[index][data.type] > data.price) priceStyle = 'text-danger';
-
-            vm.tickers[index][data.type] = data.price;
-            vm.tickers[index].date = date;
-
-            if (data.type === 'last') {
-              $scope.$digest();
-            }
-
-            priceElement.text('$' + price);
-            dateElement.text(quoteDate);
-            timeElement.text(time);
-
-            if (priceStyle && priceElement.length) {
-              if (priceElement.get(0).timer) clearTimeout(priceElement.get(0).timer);
-              priceElement.removeClass('text-success text-danger').addClass(priceStyle);
-              priceElement.get(0).timer = setTimeout(function(){
-                priceElement.removeClass('text-success text-danger');
-              }, 2000);
-            }
-          }
-        }
-
-      }
-
-    }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-      .module('app.stocks')
-      .factory('stocksService', stocksService);
-
-  stocksService.$inject = ['$rootScope', '$resource'];
-
-  function stocksService($rootScope, $resource) {
-
-    var VOCABULARY_URL = $rootScope.app.companiesUrl;
-    var companies = $resource(VOCABULARY_URL + '/:ticker', {ticker: '@ticker'}, {
-      'bySymbol': {
-        method: 'GET',
-        isArray: true,
-        cache: true
-      },
-      'all': {
-        method: 'GET',
-        isArray: true,
-        cache: true
-      }
-    });
-
-    var PREDICTIONS_URL = $rootScope.app.predictionsUrl;
-    var predictions = $resource(PREDICTIONS_URL + '/:tickers/:start_date/:end_date', {
-      tickers: '@tickers',
-      start_date: '@start_date',
-      end_date: '@end_date'
-    }, {
-      query: {
-        method: 'GET'
-      }
-    });
-
-    var HISTORICAL_PREDICTIONS_URL = $rootScope.app.historicalPredictionsUrl;
-    var historicalPredictions = $resource(HISTORICAL_PREDICTIONS_URL + '/:ticker/:date', {
-      ticker: '@ticker',
-      date: '@date'
-    }, {
-      query: {
-        method: 'GET'
-      }
-    });
-
-
-    var HISTORICAL_STOCKS_URL = $rootScope.app.historicalStocksUrl;
-    var historicalStocks = $resource(HISTORICAL_STOCKS_URL + '/:ticker/:date', {
-      ticker: '@ticker',
-      date: '@date'
-    }, {
-      query: {
-        method: 'GET'
-      }
-    });
-
-    function getCompanyBySymbol (ticker) {
-      return companies.bySymbol({ticker:ticker}).$promise;
-    }
-
-    function getCompanies() {
-      return companies.all().$promise;
-    }
-
-    function getPredictions(tickers, start_date, end_date) {
-      if (Array.isArray(tickers)) { tickers = tickers.join(','); }
-      return predictions.query({tickers: tickers, start_date: start_date, end_date: end_date}).$promise;
-    }
-
-    function getPredictionsByDays(tickers, days) {
-      var now = moment().utc();
-      var start_date = moment().utc();
-      var end_date = moment().utc().businessAdd(days);
-
-      if(now.day() === 0 || now.day() === 6) {
-        start_date = start_date.businessAdd(1);
-        end_date = end_date.businessAdd(1);
-      }
-
-      return getPredictions(tickers, start_date.format('YYYY-MM-DD'), end_date.format('YYYY-MM-DD'));
-    }
-
-    function getHistoricalPredictions(tickers, date) {
-      if (Array.isArray(tickers)) { tickers = tickers.join(','); }
-      return historicalPredictions.query({ticker: tickers, date: date}).$promise;
-    }
-
-    function getHistoricalStocks(ticker, date) {
-      return historicalStocks.query({ticker: ticker, date: date}).$promise;
-    }
-
-    return {
-      getCompanyBySymbol: getCompanyBySymbol,
-      getCompanies: getCompanies,
-      getPredictions: getPredictions,
-      getPredictionsByDays: getPredictionsByDays,
-      getHistoricalPredictions: getHistoricalPredictions,
-      getHistoricalStocks: getHistoricalStocks
-    };
-  }
-})();
-
 (function() {
     'use strict';
 
@@ -6831,66 +5428,6 @@
 
     }
 })();
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.wtst')
-        .component('wtstAbout', {
-          templateUrl: 'app/views/wtst/about.html',
-          controller: WtstAboutController
-        });
-
-  WtstAboutController.$inject = [];
-    function WtstAboutController() {
-      var vm = this;
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.wtst')
-        .component('wtstJoin', {
-          templateUrl: 'app/views/wtst/join.html',
-          controller: WtstJoinController
-        });
-
-  WtstJoinController.$inject = [];
-    function WtstJoinController() {
-      var vm = this;
-    }
-})();
-
-/**=========================================================
- * Module: stocks,js
- * Angular Stocks table controller
- =========================================================*/
-
-(function() {
-    'use strict';
-    angular
-        .module('app.wtst')
-        .component('wtstPartners', {
-          templateUrl: 'app/views/wtst/partners.html',
-          controller: WtstPartnersController
-        });
-
-  WtstPartnersController.$inject = [];
-    function WtstPartnersController() {
-      var vm = this;
-    }
-})();
-
 /**=========================================================
  * Module: animate-enabled.js
  * Enable or disables ngAnimate for element with directive
@@ -7318,6 +5855,66 @@
           }
 
         };
+    }
+})();
+
+/**=========================================================
+ * Module: stocks,js
+ * Angular Stocks table controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+    angular
+        .module('app.wtst')
+        .component('wtstAbout', {
+          templateUrl: 'app/views/wtst/about.html',
+          controller: WtstAboutController
+        });
+
+  WtstAboutController.$inject = [];
+    function WtstAboutController() {
+      var vm = this;
+    }
+})();
+
+/**=========================================================
+ * Module: stocks,js
+ * Angular Stocks table controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+    angular
+        .module('app.wtst')
+        .component('wtstJoin', {
+          templateUrl: 'app/views/wtst/join.html',
+          controller: WtstJoinController
+        });
+
+  WtstJoinController.$inject = [];
+    function WtstJoinController() {
+      var vm = this;
+    }
+})();
+
+/**=========================================================
+ * Module: stocks,js
+ * Angular Stocks table controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+    angular
+        .module('app.wtst')
+        .component('wtstPartners', {
+          templateUrl: 'app/views/wtst/partners.html',
+          controller: WtstPartnersController
+        });
+
+  WtstPartnersController.$inject = [];
+    function WtstPartnersController() {
+      var vm = this;
     }
 })();
 

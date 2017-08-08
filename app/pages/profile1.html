@@ -1,15 +1,16 @@
+<header id="login" ng-include="'app/views/partials/top-navbar.html'"></header>
 <div class="profile">
-   <div class="container">
+   <div class="container" ng-controller="Profile1Controller as profile1">
       <div class="row">
          <div class="col-md-1 col-sm-2 col-xs-12 col-left">
             <ul class="pro_strip">
                <li>
-                  <a href="profile1">
+                  <a href="#">
                      <h3>Profile</h3>
                   </a>
                </li>
                <li>
-                  <a href="profile1">
+                  <a href="#">
                      <h3>stock</h3>
                   </a>
                </li>
@@ -27,44 +28,6 @@
          </div>
          <!-- col-->
          <div class="col-md-11 col-sm-10 col-xs-12 col-ryt">
-            <div class="user_breif">
-               <span id="profile_pic">
-                  <img src="app/images/dp.png" />
-               </span>
-               <div class="name_etc">
-                  <h2>Sophie Moore<i class="fa fa-pencil" aria-hidden="true"></i>
-                  </h2>
-                  <h3>
-                     <img src="app/images/flag.png" />UNITED STATES</h3>
-                  <h4>Since 2017</h4>
-               </div>
-               <!-- name_etc-->
-               <div class="follows">
-                  <ul>
-                     <li>followers : 23</li>
-                     <li>following : 25</li>
-                  </ul><a href="#">Follow Sophie</a>
-               </div>
-               <!-- follows-->
-               <div class="money_ranking">
-                  <ul>
-                     <li>
-                        <img src="app/images/v-money.png" />
-                        <h3>Virtual Money
-                           <span>$100,000</span>
-                        </h3>
-                     </li>
-                     <li>
-                        <img src="app/images/ranking.png" />
-                        <h3>Ranking Position
-                           <span>25</span>
-                        </h3>
-                     </li>
-                  </ul>
-               </div>
-               <!-- money_ranking-->
-            </div>
-            <!-- user_breif-->
             <div class="stocks_goals">
                <div class="my_stocks">
                   <h2>My Stocks</h2>
@@ -136,83 +99,99 @@
                   </div>
                </div>
                <!-- stocks-->
-               <div class="goals">
-                  <h2>My Goals</h2>
-                  <ul>
-                     <li>
-                        <span>
-                           <img src="app/images/goal.png" />
-                        </span>
-                        <h3>Sophie has taken Isabelle position
-                           <span>3 housrs ago</span>
-                        </h3>
-                     </li>
-                     <li>
-                        <span>
-                           <img src="app/images/already.png" />
-                        </span>
-                        <h3>You got already 24 position
-                           <span>3 housrs ago</span>
-                        </h3>
-                     </li>
-                     <li>
-                        <span>
-                           <img src="app/images/goal1.png" />
-                        </span>
-                        <h3>Isabelle is following you
-                           <span>3 housrs ago</span>
-                        </h3>
-                     </li>
-                     <li>
-                        <span>
-                           <img src="app/images/v-money1.png" />
-                        </span>
-                        <h3>Now you have $100.000
-                           <span>3 housrs ago</span>
-                        </h3>
-                     </li>
-                  </ul>
+               <div class="goals accuracy">
+                  <h2>Accuracy</h2>
+                  <div class="level" id="progress-bar">
+                     <div class="progress-bar position" id="checkback" data-percent="33" data-color="#fff,#79af00"></div>
+                  </div>
                </div>
                <!-- goals-->
+               <ul id="output"></ul>
             </div>
             <!-- stocks_goals-->
             <div class="payment_news">
-               <div class="payment">
-                  <h2>Payment Method</h2>
-                  <ul>
-                     <li>
-                        <span>
-                           <img src="app/images/master-card.png" />
-                        </span>
-                        <h3>000-XXX-XXX-XXX
-                           <span><i class="fa fa-times" aria-hidden="true"></i>
-                           </span>
-                        </h3>
+               <div class="payment last_week">
+                  <h2>Last Week</h2>
+                  <div class="paging">
+                     <ul class="pagination pagination">
+                        <li><a href="#">...</a>
+                        </li>
+                        <li><a href="#">1w</a>
+                        </li>
+                        <li><a href="#">1w</a>
+                        </li>
+                        <li><a href="#">1w</a>
+                        </li>
+                        <li><a href="#">TODAY</a>
+                        </li>
+                        <li><a href="#">1w</a>
+                        </li>
+                        <li><a href="#">1w</a>
+                        </li>
+                        <li><a href="#">1w</a>
+                        </li>
+                        <li><a href="#">...</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <ul class="nav nav-pills">
+                     <li class="active"><a data-toggle="pill" href="#performer">Top Performing</a>
                      </li>
                      <li>
-                        <span>
-                           <img src="app/images/a-pay.png" />
-                        </span>
-                        <h3>Pay with Touch ID
-                           <span><i class="fa fa-times" aria-hidden="true"></i>
-                           </span>
-                        </h3>
-                     </li>
-                     <li>
-                        <span>
-                           <img src="app/images/an-pay.png" />
-                        </span>
-                        <h3>Add Android Pay Account
-                           <span><i class="fa fa-times" aria-hidden="true"></i>
-                           </span>
-                        </h3>
-                     </li>
-                     <li>
-                        <span><i class="fa fa-plus" aria-hidden="true"></i>
-                        </span>
-                        <h3>Add new card</h3>
+                        <a data-toggle="pill" href="#stars">
+                           <img src="app/images/stars-tab.png" />All Stars</a>
                      </li>
                   </ul>
+                  <div class="tab-content">
+                     <div class="tab-pane fade in active" id="performer">
+                        <ul>
+                           <li>
+                              <span id="count">1</span>
+                              <span id="per_img">
+                                 <img src="app/images/herman.png" />
+                              </span>
+                              <span id="madal">
+                                 <img src="app/images/gold.png" />
+                              </span>
+                              <h3>$1430,000</h3>
+                           </li>
+                           <li>
+                              <span id="count">2</span>
+                              <span id="per_img">
+                                 <img src="app/images/herman.png" />
+                              </span>
+                              <span id="madal">
+                                 <img src="app/images/gold.png" />
+                              </span>
+                              <h3>$850,000</h3>
+                           </li>
+                           <li>
+                              <span id="count">3</span>
+                              <span id="per_img">
+                                 <img src="app/images/herman.png" />
+                              </span>
+                              <span id="madal">
+                                 <img src="app/images/silver.png" />
+                              </span>
+                              <h3>$350,000</h3>
+                           </li>
+                           <li>
+                              <span id="count">4</span>
+                              <span id="per_img">
+                                 <img src="app/images/herman.png" />
+                              </span>
+                              <span id="madal">
+                                 <img src="app/images/hot.png" />
+                              </span>
+                              <h3>$100,000</h3>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="tab-pane fade" id="stars">
+                        <h3>Menu 1</h3>
+                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                     </div>
+                  </div>
                </div>
                <!-- payment-->
                <div class="news">

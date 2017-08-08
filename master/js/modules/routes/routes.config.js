@@ -48,38 +48,7 @@
                 $rootScope.app.layout.headerHome = false;
               }
           })
-          .state('app.company', {
-              url: '/company/:id',
-              title: 'Company',
-              templateUrl: 'app/pages/company.html',
-              resolve: helper.resolveFor('moment', 'moment-plugins', 'socket', 'flot-chart', 'flot-chart-plugins', 'd3', 'orb')
-          })
-          .state('app.predictionAccuracy', {
-              url: '/prediction-accuracy',
-              title: 'Prediction accuracy',
-              templateUrl: 'app/pages/prediction-accuracy.html',
-              resolve: helper.resolveFor('moment', 'moment-plugins', 'flot-chart', 'flot-chart-plugins')
-          })
-          .state('app.features', {
-              url: '/features',
-              title: 'Features',
-              templateUrl: 'app/pages/features.html'
-          })
-          .state('app.pricing', {
-              url: '/pricing',
-              title: 'Pricing',
-              templateUrl: 'app/pages/pricing.html'
-          })
-          .state('app.investors', {
-              url: '/investors',
-              title: 'Investors',
-              templateUrl: 'app/pages/investors.html'
-          })
-          .state('app.faq', {
-              url: '/faq',
-              title: 'Faq',
-              templateUrl: 'app/pages/faq.html'
-          })
+
           .state('auth', {
               url: '/auth',
               templateUrl: 'app/pages/auth.html',
@@ -123,75 +92,20 @@
               title: 'confirm-account',
               templateUrl: 'app/pages/confirm-account.html'
           })
-
-
+            .state('profile1', {
+                url: '/profile1',
+                title: 'profile1',
+                templateUrl: 'app/pages/profile1.html'
+            })
+            .state('confirmAccount', {
+                url: '/confirmAccount',
+                title: 'confirmAccount',
+                templateUrl: 'app/pages/confirm-account.html'
+            })
 
             //
-          .state('app.welcome', {
-              url: '/welcome',
-              title: 'Welcome',
-              templateUrl: helper.basepath('welcome.html')
-          })
-          //
-          // Material
-          // -----------------------------------
-          .state('app.cards', {
-            url: '/cards',
-            title: 'Material Cards',
-            templateUrl: helper.basepath( 'material.cards.html' )
-          })
-          .state('app.forms', {
-            url: '/forms',
-            title: 'Material Forms',
-            templateUrl: helper.basepath( 'material.forms.html' )
-          })
-          .state('app.whiteframe', {
-            url: '/whiteframe',
-            title: 'Material Whiteframe',
-            templateUrl: helper.basepath( 'material.whiteframe.html' )
-          })
-          .state('app.matcolors', {
-            url: '/matcolors',
-            title: 'Material Colors',
-            templateUrl: helper.basepath( 'material.colors.html' )
-          })
-          .state('app.lists', {
-            url: '/lists',
-            title: 'Material Lists',
-            templateUrl: helper.basepath( 'material.lists.html' )
-          })
-          .state('app.inputs', {
-            url: '/inputs',
-            title: 'Material Inputs',
-            templateUrl: helper.basepath( 'material.inputs.html' )
-          })
-          .state('app.matwidgets', {
-            url: '/matwidgets',
-            title: 'Material Widgets',
-            templateUrl: helper.basepath( 'material.widgets.html' ),
-            resolve: helper.resolveFor('weather-icons', 'loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
-          })
-          .state('app.ngmaterial', {
-            url: '/ngmaterial',
-            title: 'ngMaterial',
-            templateUrl: helper.basepath( 'material.ngmaterial.html' )
-          })
-          //
-          // CUSTOM RESOLVES
-          //   Add your own resolves properties
-          //   following this object extend
-          //   method
-          // -----------------------------------
-          // .state('app.someroute', {
-          //   url: '/some_url',
-          //   templateUrl: 'path_to_template.html',
-          //   controller: 'someController',
-          //   resolve: angular.extend(
-          //     helper.resolveFor(), {
-          //     // YOUR RESOLVES GO HERE
-          //     }
-          //   )
-          // })
+         
+
           ;
 
     } // routesConfig
